@@ -150,4 +150,145 @@
       placeholder="Notas de la cita"
     ></textarea>
 
-    <
+    <button class="guardar" onclick="guardarCita()">
+  + Guardar cita
+</button>
+
+</div>
+
+<div id="listaCitas"></div>
+
+</main>
+
+<script>
+
+let citas =
+  JSON.parse(localStorage.getItem("citasCRUSAA")) || [];
+
+function guardarCita() {
+
+  const cliente =
+    document.getElementById("cliente").value.trim();
+
+  const fecha =
+    document.getElementById("fecha").value;
+
+  const hora =
+    document.getElementById("hora").value;
+
+  const tipo =
+    document.getElementById("tipo").value;
+
+  const notas =
+    document.getElementById("notas").value.trim();
+
+  if (!cliente || !fecha || !hora) {
+    alert("Ingresa cliente, fecha y hora.");
+    return;
+  }
+
+  citas.push({
+    cliente,
+    fecha,
+    hora,
+    tipo,
+    notas
+  });
+
+  localStorage.setItem(
+    "citasCRUSAA",
+    JSON.stringify(citas)
+  );
+
+  document.getElementById("cliente").value = "";
+  document.getElementById("fecha").value = "";
+  document.getElementById("hora").value = "";
+  document.getElementById("tipo").value = "";
+  document.getElementById("notas").value = "";
+
+  mostrarCitas();
+}
+
+function eliminarCita(index) {
+
+  if (!confirm("¿Eliminar esta cita?")) {
+    return;
+  }
+
+  citas.splice(index, 1);
+
+  localStorage.setItem(
+    "citasCRUSAA",
+    JSON.stringify(citas)
+  );
+
+  mostrarCitas();
+}
+
+function mostrarCitas() {
+
+  const lista =
+    document.getElementById("listaCitas");
+
+  if (citas.length === 0) {
+    lista.innerHTML =
+      '<div class="vacio">Todavía no hay citas registradas.</div>';
+    return;
+  }
+
+  lista.innerHTML = "";
+
+  citas.forEach((cita, index) => {
+
+    const tarjeta =
+      document.createElement("div");
+
+    tarjeta.className = "cita";
+
+    const titulo =
+      document.createElement("h3");
+
+    titulo.textContent = cita.cliente;
+    tarjeta.appendChild(titulo);
+
+    const fecha =
+      document.createElement("p");
+
+    fecha.textContent =
+      "📅 " + cita.fecha + "  🕐 " + cita.hora;
+
+    tarjeta.appendChild(fecha);
+
+    if (cita.tipo) {
+      const tipo = document.createElement("p");
+      tipo.textContent = "📌 " + cita.tipo;
+      tarjeta.appendChild(tipo);
+    }
+
+    if (cita.notas) {
+      const notas = document.createElement("p");
+      notas.textContent = "📝 " + cita.notas;
+      tarjeta.appendChild(notas);
+    }
+
+    const eliminar =
+      document.createElement("button");
+
+    eliminar.className = "eliminar";
+    eliminar.textContent = "Eliminar";
+
+    eliminar.onclick = function () {
+      eliminarCita(index);
+    };
+
+    tarjeta.appendChild(eliminar);
+    lista.appendChild(tarjeta);
+  });
+}
+
+mostrarCitas();
+
+</script>
+
+</body>
+</html>
