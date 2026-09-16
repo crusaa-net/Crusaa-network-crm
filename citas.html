@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citas - CRUSAA Network</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+    }
+
+    header {
+      background: #1e293b;
+      padding: 20px;
+    }
+
+    header h2 {
+      margin: 0;
+    }
+
+    main {
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .subtitulo {
+      color: #94a3b8;
+      margin-bottom: 25px;
+    }
+
+    .formulario {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      background: #0f172a;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 14px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .guardar {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+    }
+
+    .cita {
+      background: #1e293b;
+      padding: 18px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .cita h3 {
+      margin-top: 0;
+    }
+
+    .eliminar {
+      background: #ef4444;
+      color: white;
+      margin-top: 8px;
+    }
+
+    .vacio {
+      color: #94a3b8;
+      text-align: center;
+      padding: 25px;
+    }
+
+    .volver {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="volver" href="crm.html">← Volver al CRM</a>
+</header>
+
+<main>
+
+  <h1>📅 Citas</h1>
+  <p class="subtitulo">
+    Organiza citas, demostraciones y seguimientos.
+  </p>
+
+  <div class="formulario">
+
+    <input
+      type="text"
+      id="cliente"
+      placeholder="Nombre del cliente"
+    >
+
+    <input
+      type="date"
+      id="fecha"
+    >
+
+    <input
+      type="time"
+      id="hora"
+    >
+
+    <select id="tipo">
+      <option value="">Tipo de cita</option>
+      <option value="Demostración">Demostración</option>
+      <option value="Seguimiento">Seguimiento</option>
+      <option value="Entrega">Entrega</option>
+      <option value="Otro">Otro</option>
+    </select>
+
+    <textarea
+      id="notas"
+      placeholder="Notas de la cita"
+    ></textarea>
+
+    <
