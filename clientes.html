@@ -307,7 +307,7 @@ function editarCliente(index) {
   const telefono = prompt("Teléfono:", cliente.telefono);
   if (telefono === null) return;
 
-  const correo = prompt("Correo electrónico:", cliente.correo);
+  const correo = prompt("Correo electrónico:", cliente.email);
   if (correo === null) return;
 
   const notas = prompt("Notas:", cliente.notas);
@@ -316,7 +316,7 @@ function editarCliente(index) {
   clientes[index] = {
     nombre: nombre,
     telefono: telefono,
-    correo: correo,
+    email: correo,
     notas: notas
   };
 
