@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUSAA Network CRM</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1e293b;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,.3);
+    }
+
+    header h1 {
+      font-size: 22px;
+    }
+
+    .logout {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .welcome p {
+      color: #94a3b8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.2);
+      transition: .2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      background: #263449;
+    }
+
+    .icon {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .status {
+      margin-top: 25px;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .online {
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 16px;
+      }
+
+      header h1 {
+        font-size: 18px;
+      }
+
+      .container {
+        padding: 16px;
+      }
+
+      .welcome h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>CRUSAA Network</h1>
+    <button class="logout" onclick="cerrarSesion()">
+      Cerrar sesión
+    </button>
+  </header>
+
+  <main class="container">
+
+    <section class="welcome">
+      <h2>Panel CRM</h2>
+      <p>Gestión de clientes, citas y equipo de CRUSAA Network.</p>
+    </section>
+
+    <section class="grid">
+
+      <div class="card" onclick="mostrarModulo('Clientes')">
+        <div class="icon">👥</div>
+        <h3>Clientes</h3>
+        <p>Administra tus clientes, contactos y prospectos.</p>
+      </div>
+
+      <div class="card" onclick="mostrarModulo('Citas')">
+        <div class="icon">📅</div>
+        <h3>Citas</h3>
+        <p>Organiza citas, demostraciones y seguimientos.</p>
+      </div>
+
+      <div class="card" onclick="mostrarModulo('Equipo')">
+        <div class="icon">🤝</div>
+        <h3>Equipo</h3>
+        <p>Gestiona los miembros de tu organización.</p>
+      </div>
+
+      <div class="card" onclick="mostrarModulo('Ventas')">
+        <div class="icon">📊</div>
+        <h3>Ventas</h3>
+        <p>Consulta y administra la actividad comercial.</p>
+      </div>
+
+    </section>
+
+    <section class="status">
+      Estado del sistema:
+      <span class="online">● Activo</span>
+    </section>
+
+  </main>
+
+  <script>
+    function mostrarModulo(modulo) {
+      alert("Módulo de " + modulo + " listo para configurar.");
+    }
+
+    function cerrarSesion() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
