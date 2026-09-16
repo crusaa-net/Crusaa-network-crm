@@ -102,6 +102,15 @@
     .volver {
       color: white;
       text-decoration: none;
+    }.editar {
+  background: #2f6fed;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-right: 8px;
+  cursor: pointer;
     }
   </style>
 </head>
@@ -272,7 +281,7 @@ function mostrarCitas() {
     }
 const editar = document.createElement("button");
 editar.textContent = "✏️ Editar";
-
+editar.className = "editar";
 editar.onclick = function () {
   editarCita(index);
 };
