@@ -298,7 +298,7 @@ tarjeta.appendChild(editar);
     });
   }
 function editarCliente(index) {
-  const clientes = JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+
   const cliente = clientes[index];
 
   const nombre = prompt("Nombre del cliente:", cliente.nombre);
