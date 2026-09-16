@@ -278,7 +278,13 @@
         notas.textContent = "📝 " + cliente.notas;
         tarjeta.appendChild(notas);
       }
+const editar = document.createElement("button");
+editar.textContent = "✏️ Editar";
+editar.onclick = function () {
+  editarCliente(index);
+};
 
+tarjeta.appendChild(editar);
       const boton = document.createElement("button");
       boton.className = "eliminar";
       boton.textContent = "Eliminar";
@@ -291,7 +297,32 @@
 
     });
   }
+function editarCliente(index) {
+  const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+  const cliente = clientes[index];
 
+  const nombre = prompt("Nombre del cliente:", cliente.nombre);
+  if (nombre === null) return;
+
+  const telefono = prompt("Teléfono:", cliente.telefono);
+  if (telefono === null) return;
+
+  const correo = prompt("Correo electrónico:", cliente.correo);
+  if (correo === null) return;
+
+  const notas = prompt("Notas:", cliente.notas);
+  if (notas === null) return;
+
+  clientes[index] = {
+    nombre: nombre,
+    telefono: telefono,
+    correo: correo,
+    notas: notas
+  };
+
+  localStorage.setItem("clientes", JSON.stringify(clientes));
+  mostrarClientes();
+}
   mostrarClientes();
 
 </script>
