@@ -130,11 +130,9 @@
 
   <div class="formulario">
 
-    <input
-      type="text"
-      id="cliente"
-      placeholder="Nombre del cliente"
-    >
+    <select id="cliente">
+  <option value="">Selecciona un cliente</option>
+</select>
 <label for="fecha">📅 Fecha de la cita</label>
     <input
       type="date"
@@ -173,7 +171,16 @@
 
 let citas =
   JSON.parse(localStorage.getItem("citasCRUSAA")) || [];
+  const clientes =
+  JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+  const selectorCliente = document.getElementById("cliente");
 
+clientes.forEach(cliente => {
+  const opcion = document.createElement("option");
+  opcion.value = cliente.nombre;
+  opcion.textContent = cliente.nombre;
+  selectorCliente.appendChild(opcion);
+});
 function guardarCita() {
 
   const cliente =
