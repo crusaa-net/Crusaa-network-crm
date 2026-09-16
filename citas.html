@@ -270,7 +270,14 @@ function mostrarCitas() {
       notas.textContent = "📝 " + cita.notas;
       tarjeta.appendChild(notas);
     }
+const editar = document.createElement("button");
+editar.textContent = "✏️ Editar";
 
+editar.onclick = function () {
+  editarCita(index);
+};
+
+tarjeta.appendChild(editar);
     const eliminar =
       document.createElement("button");
 
@@ -284,6 +291,38 @@ function mostrarCitas() {
     tarjeta.appendChild(eliminar);
     lista.appendChild(tarjeta);
   });
+}function editarCita(index) {
+  const cita = citas[index];
+
+  const cliente = prompt("Nombre del cliente:", cita.cliente);
+  if (cliente === null) return;
+
+  const fecha = prompt("Fecha:", cita.fecha);
+  if (fecha === null) return;
+
+  const hora = prompt("Hora:", cita.hora);
+  if (hora === null) return;
+
+  const tipo = prompt("Tipo de cita:", cita.tipo);
+  if (tipo === null) return;
+
+  const notas = prompt("Notas:", cita.notas || "");
+  if (notas === null) return;
+
+  citas[index] = {
+    cliente: cliente,
+    fecha: fecha,
+    hora: hora,
+    tipo: tipo,
+    notas: notas
+  };
+
+  localStorage.setItem(
+    "citasCRUSAA",
+    JSON.stringify(citas)
+  );
+
+  mostrarCitas();
 }
 
 mostrarCitas();
