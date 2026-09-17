@@ -268,7 +268,16 @@ const archivoFoto =
 
       const tarjeta = document.createElement("div");
       tarjeta.className = "cliente";
-
+if (cliente.foto) {
+  const foto = document.createElement("img");
+  foto.src = cliente.foto;
+  foto.style.width = "90px";
+  foto.style.height = "90px";
+  foto.style.borderRadius = "50%";
+  foto.style.objectFit = "cover";
+  foto.style.marginBottom = "12px";
+  tarjeta.appendChild(foto);
+}
       const nombre = document.createElement("h3");
       nombre.textContent = cliente.nombre;
       tarjeta.appendChild(nombre);
