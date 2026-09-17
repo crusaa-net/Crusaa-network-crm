@@ -315,7 +315,10 @@ function editarLlamada(index) {
   const lista = document.getElementById("listaSeguimientos");
   lista.innerHTML = "";
 
-  const pendientes = llamadas.filter(llamada => llamada.seguimiento);
+  const pendientes = llamadas.filter(llamada =>
+  llamada.seguimiento &&
+  new Date(llamada.seguimiento) >= new Date()
+);
 
   if (pendientes.length === 0) {
     lista.innerHTML = "<p>No hay seguimientos pendientes.</p>";
