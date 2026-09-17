@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Telemarketing - CRUSAA Network</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #081426;
+      color: white;
+    }
+
+    .contenedor {
+      max-width: 700px;
+      margin: auto;
+      padding: 35px 20px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+
+    .subtitulo {
+      color: #aeb9ca;
+      font-size: 18px;
+      line-height: 1.4;
+      margin-bottom: 30px;
+    }
+
+    .formulario {
+      background: #192b42;
+      padding: 25px;
+      border-radius: 25px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+            padding: 16px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-family: Arial, sans-serif;
+      background: white;
+      color: #222;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #1769e8;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .lista {
+      margin-top: 30px;
+    }
+
+    .registro {
+      background: #192b42;
+      padding: 22px;
+      border-radius: 22px;
+      margin-bottom: 18px;
+    }
+
+    .registro h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+
+    .registro p {
+      color: #c0cad8;
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+        .fecha {
+      color: #8f9caf !important;
+      font-size: 14px;
+      margin-top: 15px !important;
+    }
+
+    .eliminar {
+      background: #ef4444;
+      margin-top: 15px;
+    }
+
+    .vacio {
+      color: #aeb9ca;
+      text-align: center;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+
+    <h1>📞 Telemarketing</h1>
+
+    <p class="subtitulo">
+      Registra llamadas y da seguimiento a tus prospectos.
+    </p>
+
+    <form id="formTelemarketing" class="formulario">
+
+      <input
+        type="text"
+        id="nombre"
+        placeholder="Nombre del prospecto *"
+        required
+      >
+
+      <input
+        type="tel"
+        id="telefono"
+        placeholder="Teléfono *"
+        required
+      >
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Correo electrónico"
+      >
+            <select id="resultado">
+        <option value="">Resultado de la llamada</option>
+        <option value="No contestó">No contestó</option>
+        <option value="Interesado">Interesado</option>
+        <option value="Cita programada">Cita programada</option>
+        <option value="Volver a llamar">Volver a llamar</option>
+        <option value="No interesado">No interesado</option>
+      </select>
+
+      <input
+        type="datetime-local"
+        id="seguimiento"
+      >
+
+      <textarea
+        id="notas"
+        placeholder="Notas de la llamada"
+      ></textarea>
+
+      <button type="submit">
+        Guardar llamada
+      </button>
+
+    </form>
+
+    <div id="listaTelemarketing" class="lista"></div>
+
+  </div>
+
+  <script>    let llamadas =
+      JSON.parse(
+        localStorage.getItem("telemarketingCRUSAA")
+      ) || [];
+
+    document
+      .getElementById("formTelemarketing")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const llamada = {
+          nombre:
+            document.getElementById("nombre").value.trim(),
+
+          telefono:
+            document.getElementById("telefono").value.trim(),
+
+          email:
+            document.getElementById("email").value.trim(),
+
+          resultado:
+            document.getElementById("resultado").value,
+
+          seguimiento:
+            document.getElementById("seguimiento").value,
+
+          notas:
+            document.getElementById("notas").value.trim(),
+
+          fecha:
+            new Date().toISOString()
+        };
+
+        llamadas.push(llamada);
+
+        localStorage.setItem(
+          "telemarketingCRUSAA",
+          JSON.stringify(llamadas)
+        );
+
+        document
+          .getElementById("formTelemarketing")
+          .reset();
+
+        mostrarLlamadas();
+
+        alert("Llamada guardada correctamente.");
+
+      });
+    function mostrarLlamadas() {
+  const lista = document.getElementById("listaTelemarketing");
+
+  lista.innerHTML = "";
+
+  if (llamadas.length === 0) {
+    lista.innerHTML = "<p>No hay llamadas registradas todavía.</p>";
+    return;
+  }
+
+  llamadas.forEach((llamada) => {
+    const registro = document.createElement("div");
+    registro.className = "registro";
+
+    registro.innerHTML = `
+      <h3>${llamada.nombre}</h3>
+      <p>📞 ${llamada.telefono}</p>
+      ${llamada.email ? `<p>✉️ ${llamada.email}</p>` : ""}
+      <p>Estado: ${llamada.estado}</p>
+      ${llamada.seguimiento ? `<p>📅 Seguimiento: ${llamada.seguimiento}</p>` : ""}
+      ${llamada.notas ? `<p>📝 ${llamada.notas}</p>` : ""}
+    `;
+
+    lista.appendChild(registro);
+  });
+}
+
+mostrarLlamadas();
