@@ -300,7 +300,7 @@ tarjeta.appendChild(editar);
 function editarCliente(index) {
 
   const cliente = clientes[index];
-
+const nombreAnterior = cliente.nombre;
   const nombre = prompt("Nombre del cliente:", cliente.nombre);
   if (nombre === null) return;
 
@@ -321,6 +321,16 @@ function editarCliente(index) {
   };
 
   localStorage.setItem("clientesCRUSAA", JSON.stringify(clientes));
+
+  let citas = JSON.parse(localStorage.getItem("citasCRUSAA")) || [];
+
+citas.forEach(cita => {
+  if (cita.cliente === nombreAnterior) {
+    cita.cliente = nombre;
+  }
+});
+
+localStorage.setItem("citasCRUSAA", JSON.stringify(citas));
   mostrarClientes();
 }
   mostrarClientes();
