@@ -311,7 +311,32 @@ function editarLlamada(index) {
 
   mostrarLlamadas();
 }
+ function mostrarSeguimientos() {
+  const lista = document.getElementById("listaSeguimientos");
+  lista.innerHTML = "";
+
+  const pendientes = llamadas.filter(llamada => llamada.seguimiento);
+
+  if (pendientes.length === 0) {
+    lista.innerHTML = "<p>No hay seguimientos pendientes.</p>";
+    return;
+  }
+
+  pendientes.forEach(llamada => {
+    const registro = document.createElement("div");
+    registro.className = "registro";
+
+    registro.innerHTML = `
+      <h3>📅 ${llamada.nombre}</h3>
+      <p>📞 ${llamada.telefono}</p>
+      <p>Seguimiento: ${llamada.seguimiento}</p>
+    `;
+
+    lista.appendChild(registro);
+  });
+ }   
 mostrarLlamadas();
+ mostrarSeguimientos();   
 </script>
 </body>
 </html>
