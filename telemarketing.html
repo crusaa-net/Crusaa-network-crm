@@ -335,7 +335,22 @@ function editarLlamada(index) {
       <p>Seguimiento: ${llamada.seguimiento}</p>
     `;
 
-    lista.appendChild(registro);
+ const completar = document.createElement("button");
+completar.textContent = "✅ Completado";
+
+completar.onclick = function () {
+  llamada.seguimiento = "";
+
+  localStorage.setItem(
+    "telemarketingCRUSAA",
+    JSON.stringify(llamadas)
+  );
+
+  mostrarSeguimientos();
+  mostrarLlamadas();
+};
+
+registro.appendChild(completar);   lista.appendChild(registro);
   });
  }   
 mostrarLlamadas();
