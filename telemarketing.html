@@ -234,7 +234,7 @@
     return;
   }
 
-  llamadas.forEach((llamada) => {
+  llamadas.forEach((llamada, index) => {
     const registro = document.createElement("div");
     registro.className = "registro";
 
@@ -246,7 +246,23 @@
       ${llamada.seguimiento ? `<p>📅 Seguimiento: ${llamada.seguimiento}</p>` : ""}
       ${llamada.notas ? `<p>📝 ${llamada.notas}</p>` : ""}
     `;
+const eliminar = document.createElement("button");
+eliminar.textContent = "🗑️ Eliminar";
 
+eliminar.onclick = function () {
+  if (confirm("¿Eliminar esta llamada?")) {
+    llamadas.splice(index, 1);
+
+    localStorage.setItem(
+      "telemarketingCRUSAA",
+      JSON.stringify(llamadas)
+    );
+
+    mostrarLlamadas();
+  }
+};
+
+registro.appendChild(eliminar);
     lista.appendChild(registro);
   });
 }
