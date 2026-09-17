@@ -338,7 +338,8 @@ const nombreAnterior = cliente.nombre;
     nombre: nombre,
     telefono: telefono,
     email: correo,
-    notas: notas
+    notas: notas,
+    foto: cliente.foto || ""
   };
 
   localStorage.setItem("clientesCRUSAA", JSON.stringify(clientes));
