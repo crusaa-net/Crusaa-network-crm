@@ -242,7 +242,7 @@
       <h3>${llamada.nombre}</h3>
       <p>📞 ${llamada.telefono}</p>
       ${llamada.email ? `<p>✉️ ${llamada.email}</p>` : ""}
-      <p>Estado: ${llamada.estado}</p>
+      <p>Resultado: ${llamada.resultado}</p>
       ${llamada.seguimiento ? `<p>📅 Seguimiento: ${llamada.seguimiento}</p>` : ""}
       ${llamada.notas ? `<p>📝 ${llamada.notas}</p>` : ""}
     `;
@@ -252,3 +252,6 @@
 }
 
 mostrarLlamadas();
+</script>
+</body>
+</html>
