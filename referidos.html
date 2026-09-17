@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Referidos | CRUSAA Network</title>
+  <style>
+form {
+  background: #18263b;
+  padding: 22px;
+  border-radius: 24px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1px solid #43536a;
+  background: white;
+  color: #111;
+  font-size: 16px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.permiso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #d5deea;
+  margin: 8px 0 20px;
+  line-height: 1.4;
+}
+
+.permiso input {
+  width: auto;
+  margin: 4px 0 0;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #1769e8;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #081426;
+      color: white;
+    }
+
+    .contenedor {
+      max-width: 700px;
+      margin: auto;
+      padding: 25px 20px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      font-size: 36px;
+    }
+
+    .subtitulo {
+      color: #aeb9ca;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <h1>👥 Agregar Referido</h1>
+
+    <p class="subtitulo">
+      Registra una nueva oportunidad en CRUSAA Network.
+    </p>
+    <form id="formReferido">
+
+  <input type="text" id="nombre" placeholder="Nombre del referido *" required>
+
+  <input type="text" id="apellido" placeholder="Apellido">
+
+  <input type="tel" id="telefono" placeholder="Teléfono *" required>
+
+  <input type="email" id="email" placeholder="Correo electrónico">
+
+  <input type="text" id="direccion" placeholder="Dirección">
+
+  <input type="text" id="ciudad" placeholder="Ciudad">
+
+  <input type="text" id="estado" placeholder="Estado">
+
+  <input type="text" id="codigoPostal" placeholder="Código Postal">
+
+  <input type="text" id="relacion" placeholder="Relación con el referido">
+
+  <input type="text" id="horario" placeholder="Mejor horario para llamar">
+
+  <textarea id="comentarios" placeholder="Comentarios"></textarea>
+
+  <label class="permiso">
+    <input type="checkbox" id="permiso" required>
+    Confirmo que tengo permiso para compartir esta información.
+  </label>
+
+  <button type="submit">Guardar Referido</button>
+
+    </form>
+  </div>
+<script>
+document.getElementById("formReferido").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const referido = {
+    nombre: document.getElementById("nombre").value.trim(),
+    apellido: document.getElementById("apellido").value.trim(),
+    telefono: document.getElementById("telefono").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    direccion: document.getElementById("direccion").value.trim(),
+    ciudad: document.getElementById("ciudad").value.trim(),
+    estado: document.getElementById("estado").value.trim(),
+    codigoPostal: document.getElementById("codigoPostal").value.trim(),
+    relacion: document.getElementById("relacion").value.trim(),
+    horario: document.getElementById("horario").value.trim(),
+    comentarios: document.getElementById("comentarios").value.trim(),
+    fecha: new Date().toISOString()
+  };
+
+  let referidos =
+    JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
+
+  referidos.push(referido);
+
+  localStorage.setItem(
+    "referidosCRUSAA",
+    JSON.stringify(referidos)
+  );
+
+  alert("Referido guardado correctamente.");
+
+  document.getElementById("formReferido").reset();
+});
+</script>
+</body>
+</html>
