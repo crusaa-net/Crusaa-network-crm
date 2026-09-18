@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Detalle del Cliente - CRUSAA Network</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #071426;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .contenedor {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .encabezado {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .volver {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .titulo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .editar {
+      color: #35a7ff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+
+    <div class="encabezado">
+      <button class="volver"
+        onclick="window.location.href='clientes.html'">
+        ←
+      </button>
+
+      <div class="titulo">Detalle del Cliente</div>
+
+      <div class="editar">Editar</div>
+    </div>
+    <div class="perfil">
+  <div id="fotoCliente"></div>
+
+  <h2 id="nombreCliente">Cliente</h2>
+
+  <div class="acciones">
+    <a id="llamarCliente">📞 Llamar</a>
+    <a id="whatsappCliente">💬 WhatsApp</a>
+    <a id="correoCliente">✉️ Correo</a>
+  </div>
+
+  <div class="datos">
+    <p id="telefonoCliente">📞</p>
+    <p id="emailCliente">✉️</p>
+    <p id="direccionCliente">📍 Dirección</p>
+
+    <button id="mapsCliente">
+      🗺️ Ver en Google Maps
+    </button>
+  </div>
+
+  <div class="notas">
+    <h3>Notas</h3>
+    <p id="notasCliente"></p>
+  </div>
+
+  <div class="seguimiento">
+    <h3>Próximo seguimiento</h3>
+    <input type="datetime-local" id="fechaSeguimiento">
+
+    <button id="calendarCliente">
+      📅 Agregar a Google Calendar
+    </button>
+  </div>
+    </div>
+    </div>
+
+<script>
+  const cliente = JSON.parse(
+  localStorage.getItem("clienteActual")
+);
+
+if (!cliente) {
+  alert("No se encontró el cliente seleccionado.");
+  window.location.href = "clientes.html";
+} else {
+  document.getElementById("nombreCliente").textContent =
+    cliente.nombre || "Cliente";
+
+  document.getElementById("telefonoCliente").textContent =
+    "📞 " + (cliente.telefono || "");
+
+  document.getElementById("emailCliente").textContent =
+    "✉️ " + (cliente.email || "");
+
+  document.getElementById("notasCliente").textContent =
+    cliente.notas || "Sin notas";
+}
+  if (cliente) {
+  const telefono = cliente.telefono || "";
+  const email = cliente.email || "";
+
+  document.getElementById("llamarCliente").href =
+    "tel:" + telefono;
+
+  document.getElementById("whatsappCliente").href =
+    "https://wa.me/" + telefono.replace(/\D/g, "");
+
+  document.getElementById("correoCliente").href =
+    "mailto:" + email;
+  }
+  if (cliente) {
+  const direccion = cliente.direccion || "";
+
+  document.getElementById("direccionCliente").textContent =
+    "📍 " + (direccion || "Sin dirección");
+
+  document.getElementById("mapsCliente").onclick = function () {
+    if (!direccion) {
+      alert("Este cliente todavía no tiene una dirección.");
+      return;
+    }
+
+    window.open(
+      "https://www.google.com/maps/search/?api=1&query=" +
+      encodeURIComponent(direccion),
+      "_blank"
+    );
+  };
+  }
+  if (cliente) {
+  document.getElementById("calendarCliente").onclick = function () {
+    const fecha = document.getElementById("fechaSeguimiento").value;
+
+    if (!fecha) {
+      alert("Selecciona primero la fecha y hora de la cita.");
+      return;
+    }
+
+    const inicio = new Date(fecha);
+    const fin = new Date(inicio.getTime() + 60 * 60 * 1000);
+
+    function formatoGoogle(fecha) {
+      return fecha.toISOString()
+        .replace(/[-:]/g, "")
+        .replace(/\.\d{3}/, "");
+    }
+
+    const titulo =
+      "Cita con " + (cliente.nombre || "Cliente");
+
+    const detalles =
+      "Teléfono: " + (cliente.telefono || "") +
+      "\nCorreo: " + (cliente.email || "");
+
+    const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(titulo) +
+      "&dates=" + formatoGoogle(inicio) + "/" + formatoGoogle(fin) +
+      "&details=" + encodeURIComponent(detalles) +
+      "&location=" + encodeURIComponent(cliente.direccion || "");
+
+    window.open(url, "_blank");
+  };
+  }
+  </script>
+
+</body>
+</html>
