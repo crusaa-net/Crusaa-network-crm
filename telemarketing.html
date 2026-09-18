@@ -321,9 +321,26 @@ function editarLlamada(index) {
   const lista = document.getElementById("listaSeguimientos");
   lista.innerHTML = "";
 
-  const pendientes = llamadas.filter(llamada =>
-  llamada.seguimiento
-);
+  const pendientes = llamadas.filter(llamada => {
+  if (!llamada.seguimiento) return false;
+
+  const fecha = new Date(llamada.seguimiento);
+  const ahora = new Date();
+
+  const hoy = new Date(
+    ahora.getFullYear(),
+    ahora.getMonth(),
+    ahora.getDate()
+  );
+
+  const fechaDia = new Date(
+    fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate()
+  );
+
+  return fechaDia.getTime() !== hoy.getTime();
+});
 pendientes.sort((a, b) =>
   new Date(a.seguimiento) - new Date(b.seguimiento)
 );
