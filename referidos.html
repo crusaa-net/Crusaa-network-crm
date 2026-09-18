@@ -251,11 +251,13 @@ function eliminarReferido(telefono) {
 
   const telefono = prompt("Teléfono:", referido.telefono);
   if (telefono === null) return;
-
+const email = prompt("Correo electrónico:",
+referido.email || "");
+if (email === null) return;
   referido.nombre = nombre;
   referido.apellido = apellido;
   referido.telefono = telefono;
-
+referido.email = email;
   localStorage.setItem(
     "referidosCRUSAA",
     JSON.stringify(referidos)
