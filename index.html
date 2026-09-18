@@ -12,111 +12,236 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
       min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at top, #123d69 0%, #061a31 45%, #020b17 100%);
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 20px;
+      align-items: center;
+      padding: 24px 18px;
     }
 
     .login {
       width: 100%;
-      max-width: 400px;
-      background: #1e293b;
-      padding: 32px 24px;
-      border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,.35);
+      max-width: 430px;
+      text-align: center;
     }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 5px;
+    .logo-crusaa {
+      width: 100%;
+      max-width: 360px;
+      display: block;
+      margin: 0 auto 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 205, 84, 0.55);
+      box-shadow:
+        0 0 25px rgba(0, 153, 255, 0.25),
+        0 0 12px rgba(255, 190, 55, 0.18);
     }
 
-    .subtitle {
-      text-align: center;
-      color: #94a3b8;
-      margin-bottom: 30px;
+    .titulo {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .network {
+      color: #e8b94f;
+    }
+
+    .lema {
+      margin: 9px 0 28px;
+      color: #c7d3e2;
+      font-size: 15px;
+      letter-spacing: 2px;
+    }
+
+    .panel {
+      padding: 28px 22px;
+      border: 1px solid #d7ad4c;
+      border-radius: 28px;
+      background: rgba(5, 27, 51, 0.88);
+      box-shadow:
+        0 0 25px rgba(0, 157, 255, 0.18),
+        inset 0 0 20px rgba(255, 196, 63, 0.04);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 31px;
+    }
+
+    .subtitulo {
+      margin-bottom: 25px;
+      color: #aebdce;
+      font-size: 16px;
     }
 
     label {
       display: block;
+      text-align: left;
       margin: 15px 0 7px;
+      color: #e8edf4;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      border-radius: 9px;
-      border: 1px solid #475569;
-      background: #0f172a;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid #526a83;
+      background: #07182d;
       color: white;
       font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #e7b84c;
+      box-shadow: 0 0 8px rgba(231, 184, 76, 0.35);
+    }
+
+    input::placeholder {
+      color: #7f8fa3;
     }
 
     button {
       width: 100%;
-      margin-top: 22px;
-      padding: 14px;
-      border: 0;
-      border-radius: 9px;
-      background: #16a34a;
-      color: white;
-      font-size: 17px;
+      margin-top: 24px;
+      padding: 16px;
+      border: 1px solid #ffe08a;
+      border-radius: 30px;
+      background: linear-gradient(
+        180deg,
+        #ffe291 0%,
+        #d99a27 52%,
+        #f5c75e 100%
+      );
+      color: #081322;
+      font-size: 19px;
       font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 0 18px rgba(238, 180, 50, 0.35);
     }
 
     #mensaje {
       text-align: center;
       margin-top: 15px;
-      color: #f87171;
+      color: #ff8b8b;
     }
- .logo-crusaa {
-  width: 100%;
-  max-width: 320px;
-  display: block;
-  margin: 0 auto 20px;
-  border-radius: 16px;
- } </style>
+
+    .pie {
+      display: flex;
+      justify-content: space-around;
+      gap: 8px;
+      margin-top: 27px;
+      color: #e7bb58;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .pie div {
+      flex: 1;
+    }
+
+    .icono {
+      display: block;
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 480px) {
+      .titulo {
+        font-size: 31px;
+      }
+
+      .panel {
+        padding: 25px 18px;
+      }
+
+      .logo-crusaa {
+        max-width: 330px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
   <div class="login">
-    <img src="file_00000000954881f9b21a69bda95ae034~2.jpg" class="logo-crusaa" alt="CRUSAA Network">
-    <h1>CRUSAA Network</h1>
-    <div class="subtitle">CRM</div>
 
-    <form id="loginForm">
+    <img
+      src="file_00000000954881f9b21a69bda95ae034~2.jpg"
+      class="logo-crusaa"
+      alt="CRUSAA Network"
+    >
 
-      <label for="email">Correo electrónico</label>
-      <input
-        type="email"
-        id="email"
-        placeholder="correo@ejemplo.com"
-        required
-      >
+    <h1 class="titulo">
+      CRUSAA <span class="network">NETWORK</span>
+    </h1>
 
-      <label for="password">Contraseña</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="Contraseña"
-        required
-      >
+    <div class="lema">
+      SOLUCIONES PARA UNA MEJOR CALIDAD DE VIDA
+    </div>
 
-      <button type="submit">
-        Iniciar sesión
-      </button>
+    <div class="panel">
 
-      <div id="mensaje"></div>
+      <h2>Bienvenido</h2>
 
-    </form>
+      <div class="subtitulo">
+        Inicia sesión para acceder a tu CRM
+      </div>
+
+      <form id="loginForm">
+
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Correo electrónico"
+          required
+        >
+
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Contraseña"
+          required
+        >
+
+        <button type="submit">
+          ↪ Iniciar sesión
+        </button>
+
+        <div id="mensaje"></div>
+
+      </form>
+
+    </div>
+
+    <div class="pie">
+      <div>
+        <span class="icono">♟</span>
+        DISCIPLINA
+      </div>
+
+      <div>
+        <span class="icono">▥</span>
+        RESULTADOS
+      </div>
+
+      <div>
+        <span class="icono">★</span>
+        UN MEJOR MAÑANA
+      </div>
+    </div>
+
   </div>
-<script src="app.js"></script>
+
+  <script src="app.js"></script>
+
 </body>
 </html>
