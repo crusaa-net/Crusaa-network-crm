@@ -206,6 +206,8 @@ clienteOrigen: JSON.parse(
     '<strong>👤 ' + referido.nombre + ' ' +
     referido.apellido + '</strong><br>' +
     '📞 ' + referido.telefono + '<br><br>' +
+    '<button onclick="editarReferido(\'' + referido.telefono + '\')">✏️ Editar</button>' +
+'<br><br>' +
     '<button onclick="eliminarReferido(\'' + referido.telefono + '\')">🗑️ Eliminar</button>' +
     '</div>';
 });
@@ -229,6 +231,38 @@ function eliminarReferido(telefono) {
 
   mostrarReferidosDelCliente();
 }
+  function editarReferido(telefonoOriginal) {
+  let referidos =
+    JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
+
+  const index = referidos.findIndex(
+    referido => referido.telefono === telefonoOriginal
+  );
+
+  if (index === -1) return;
+
+  const referido = referidos[index];
+
+  const nombre = prompt("Nombre:", referido.nombre);
+  if (nombre === null) return;
+
+  const apellido = prompt("Apellido:", referido.apellido || "");
+  if (apellido === null) return;
+
+  const telefono = prompt("Teléfono:", referido.telefono);
+  if (telefono === null) return;
+
+  referido.nombre = nombre;
+  referido.apellido = apellido;
+  referido.telefono = telefono;
+
+  localStorage.setItem(
+    "referidosCRUSAA",
+    JSON.stringify(referidos)
+  );
+
+  mostrarReferidosDelCliente();
+  }
 mostrarReferidosDelCliente();
 </script>
 </body>
