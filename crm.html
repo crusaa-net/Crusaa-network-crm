@@ -336,8 +336,13 @@
 
   <script>
     function mostrarModulo(modulo) {
-      alert("Módulo de " + modulo + " listo para configurar.");
-    }
+  if (modulo === "4 en 14") {
+    window.location.href = "cuatro-en-catorce.html";
+    return;
+  }
+
+  alert("Módulo de " + modulo + " listo para configurar.");
+}
 
     function cerrarSesion() {
       window.location.href = "index.html";
