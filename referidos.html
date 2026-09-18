@@ -126,6 +126,7 @@ button {
 
     </form>
   </div>
+  <div id="referidosDelCliente"></div>
 <script>
 document.getElementById("formReferido").addEventListener("submit", function(event) {
   event.preventDefault();
@@ -163,6 +164,47 @@ clienteOrigen: JSON.parse(
 
   document.getElementById("formReferido").reset();
 });
+  function mostrarReferidosDelCliente() {
+  const contenedor =
+    document.getElementById("referidosDelCliente");
+
+  const clienteActual = JSON.parse(
+    localStorage.getItem("clienteReferidosActual")
+  );
+
+  if (!clienteActual) {
+    contenedor.innerHTML = "";
+    return;
+  }
+
+  const referidos = JSON.parse(
+    localStorage.getItem("referidosCRUSAA")
+  ) || [];
+
+  const delCliente = referidos.filter(
+    referido => referido.clienteOrigen === clienteActual.nombre
+  );
+
+  contenedor.innerHTML =
+    "<h2>👥 Referidos de " + clienteActual.nombre + "</h2>";
+
+  if (delCliente.length === 0) {
+    contenedor.innerHTML +=
+      "<p>Este cliente todavía no tiene referidos.</p>";
+    return;
+  }
+
+  delCliente.forEach(referido => {
+    contenedor.innerHTML +=
+      "<div><strong>" +
+      referido.nombre + " " + referido.apellido +
+      "</strong><br>📞 " +
+      referido.telefono +
+      "</div>";
+  });
+}
+
+mostrarReferidosDelCliente();
 </script>
 </body>
 </html>
