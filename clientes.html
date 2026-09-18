@@ -319,6 +319,21 @@ referidos.onclick = function () {
   abrirReferidos(index);
 };
 tarjeta.appendChild(referidos);
+      const detalles =
+  document.createElement("button");
+
+detalles.textContent = "📋 Detalles";
+
+detalles.onclick = function () {
+  localStorage.setItem(
+    "clienteActual",
+    JSON.stringify(cliente)
+  );
+
+  window.location.href = "detalle-cliente.html";
+};
+
+tarjeta.appendChild(detalles);
       const boton = document.createElement("button");
       boton.className = "eliminar";
       boton.textContent = "Eliminar";
