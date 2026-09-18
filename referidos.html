@@ -193,13 +193,12 @@ clienteOrigen: JSON.parse(
   }
 
   delCliente.forEach(referido => {
-    contenedor.innerHTML +=
-      "<div><strong>" +
-      referido.nombre + " " + referido.apellido +
-      "</strong><br>📞 " +
-      referido.telefono +
-      "</div>";
-  });
+  contenedor.innerHTML +=
+    '<div class="tarjetaReferido">' +
+      '<strong>👤 ' + referido.nombre + ' ' + referido.apellido + '</strong><br>' +
+      '📞 ' + referido.telefono +
+    '</div>';
+});
 }
 
 mostrarReferidosDelCliente();
