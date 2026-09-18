@@ -330,12 +330,37 @@ pendientes.sort((a, b) =>
   }
 
   pendientes.forEach(llamada => {
+    const fechaSeguimiento = new Date(llamada.seguimiento);
+const ahora = new Date();
+
+const hoy = new Date(
+  ahora.getFullYear(),
+  ahora.getMonth(),
+  ahora.getDate()
+);
+
+const fechaDia = new Date(
+  fechaSeguimiento.getFullYear(),
+  fechaSeguimiento.getMonth(),
+  fechaSeguimiento.getDate()
+);
+
+let estadoSeguimiento = "";
+
+if (fechaDia < hoy) {
+  estadoSeguimiento = "🔴 Vencido";
+} else if (fechaDia.getTime() === hoy.getTime()) {
+  estadoSeguimiento = "🟡 Hoy";
+} else {
+  estadoSeguimiento = "🟢 Próximo";
+}
     const registro = document.createElement("div");
     registro.className = "registro";
 
     registro.innerHTML = `
       <h3>📅 ${llamada.nombre}</h3>
       <p>📞 ${llamada.telefono}</p>
+      <p>${estadoSeguimiento}</p>
      <p>📅 Seguimiento: ${new Date(llamada.seguimiento).toLocaleString("es-US", {
   dateStyle: "long",
   timeStyle: "short"
