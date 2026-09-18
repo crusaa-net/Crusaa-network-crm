@@ -306,6 +306,12 @@ editar.onclick = function () {
 };
 
 tarjeta.appendChild(editar);
+      const referidos = document.createElement("button");
+referidos.textContent = "👥 Referidos";
+referidos.onclick = function () {
+  abrirReferidos(index);
+};
+tarjeta.appendChild(referidos);
       const boton = document.createElement("button");
       boton.className = "eliminar";
       boton.textContent = "Eliminar";
@@ -355,6 +361,14 @@ citas.forEach(cita => {
 localStorage.setItem("citasCRUSAA", JSON.stringify(citas));
   mostrarClientes();
 }
+  function abrirReferidos(index) {
+  localStorage.setItem(
+    "clienteReferidosActual",
+    JSON.stringify(clientes[index])
+  );
+
+  window.location.href = "referidos.html";
+  }
   mostrarClientes();
 function convertirFotoBase64(archivo) {
   return new Promise((resolve, reject) => {
