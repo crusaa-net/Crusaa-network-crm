@@ -430,7 +430,23 @@ registro.appendChild(completar);   lista.appendChild(registro);
         minute: "2-digit"
       })}</p>
     `;
+const completarHoy = document.createElement("button");
+completarHoy.textContent = "✅ Completar seguimiento";
 
+completarHoy.onclick = function () {
+  llamada.seguimiento = "";
+
+  localStorage.setItem(
+    "telemarketingCRUSAA",
+    JSON.stringify(llamadas)
+  );
+
+  mostrarLlamadas();
+  mostrarSeguimientos();
+  mostrarHoy();
+};
+
+registro.appendChild(completarHoy);
     lista.appendChild(registro);
   });
  }
