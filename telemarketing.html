@@ -386,9 +386,56 @@ completar.onclick = function () {
 
 registro.appendChild(completar);   lista.appendChild(registro);
   });
- }   
+ }   function mostrarHoy() {
+  const lista = document.getElementById("listaHoy");
+  lista.innerHTML = "";
+
+  const ahora = new Date();
+
+  const hoy = new Date(
+    ahora.getFullYear(),
+    ahora.getMonth(),
+    ahora.getDate()
+  );
+
+  const seguimientosHoy = llamadas.filter(llamada => {
+    if (!llamada.seguimiento) return false;
+
+    const fecha = new Date(llamada.seguimiento);
+
+    const fechaDia = new Date(
+      fecha.getFullYear(),
+      fecha.getMonth(),
+      fecha.getDate()
+    );
+
+    return fechaDia.getTime() === hoy.getTime();
+  });
+
+  if (seguimientosHoy.length === 0) {
+    lista.innerHTML = "<p>No hay seguimientos para hoy.</p>";
+    return;
+  }
+
+  seguimientosHoy.forEach(llamada => {
+    const registro = document.createElement("div");
+    registro.className = "registro";
+
+    registro.innerHTML = `
+      <h3>🔔 ${llamada.nombre}</h3>
+      <p>📞 ${llamada.telefono}</p>
+      <p>⏰ ${new Date(llamada.seguimiento).toLocaleTimeString("es-US", {
+        hour: "numeric",
+        minute: "2-digit"
+      })}</p>
+    `;
+
+    lista.appendChild(registro);
+  });
+ }
 mostrarLlamadas();
  mostrarSeguimientos();   
+  mostrarHoy();  
 </script>
 </body>
 </html>
