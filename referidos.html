@@ -205,7 +205,8 @@ clienteOrigen: JSON.parse(
     '<div class="tarjetaReferido">' +
     '<strong>👤 ' + referido.nombre + ' ' +
     referido.apellido + '</strong><br>' +
-    '📞 ' + referido.telefono + '<br><br>' +
+'📞 ' + referido.telefono + '<br>' +
+'✉️ ' + (referido.email || '') + '<br><br>' +
     '<button onclick="editarReferido(\'' + referido.telefono + '\')">✏️ Editar</button>' +
 '<br><br>' +
     '<button onclick="eliminarReferido(\'' + referido.telefono + '\')">🗑️ Eliminar</button>' +
