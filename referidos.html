@@ -142,7 +142,11 @@ document.getElementById("formReferido").addEventListener("submit", function(even
     relacion: document.getElementById("relacion").value.trim(),
     horario: document.getElementById("horario").value.trim(),
     comentarios: document.getElementById("comentarios").value.trim(),
-    fecha: new Date().toISOString()
+    fecha: new Date().toISOString(),
+  
+clienteOrigen: JSON.parse(
+  localStorage.getItem("clienteReferidosActual")
+)?.nombre || ""
   };
 
   let referidos =
