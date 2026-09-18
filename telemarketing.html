@@ -333,7 +333,10 @@ pendientes.sort((a, b) =>
     registro.innerHTML = `
       <h3>📅 ${llamada.nombre}</h3>
       <p>📞 ${llamada.telefono}</p>
-      <p>Seguimiento: ${llamada.seguimiento}</p>
+     <p>📅 Seguimiento: ${new Date(llamada.seguimiento).toLocaleString("es-US", {
+  dateStyle: "long",
+  timeStyle: "short"
+})}</p> 
     `;
 
  const completar = document.createElement("button");
