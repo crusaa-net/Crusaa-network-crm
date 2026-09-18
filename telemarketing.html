@@ -316,8 +316,7 @@ function editarLlamada(index) {
   lista.innerHTML = "";
 
   const pendientes = llamadas.filter(llamada =>
-  llamada.seguimiento &&
-  new Date(llamada.seguimiento) >= new Date()
+  llamada.seguimiento
 );
 pendientes.sort((a, b) =>
   new Date(a.seguimiento) - new Date(b.seguimiento)
