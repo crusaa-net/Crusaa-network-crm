@@ -391,8 +391,8 @@ localStorage.setItem("citasCRUSAA", JSON.stringify(citas));
 
     const coincide =
       (cliente.nombre || "").toLowerCase().includes(texto) ||
-      (cliente.telefono || "").toLowerCase().includes(texto) ||
-      (cliente.email || "").toLowerCase().includes(texto);
+      (cliente.telefono || "").toLowerCase().includes(texto) ;
+    
 
     tarjeta.style.display = coincide ? "" : "none";
   });
