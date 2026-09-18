@@ -64,7 +64,7 @@
 
       <div class="titulo">Detalle del Cliente</div>
 
-      <div class="editar">Editar</div>
+<div class="editar" id="editarCliente">Editar</div>
     </div>
     <div class="perfil">
   <div id="fotoCliente"></div>
@@ -191,6 +191,51 @@ if (!cliente) {
     window.open(url, "_blank");
   };
   }
+  document.getElementById("editarCliente").onclick = function () {
+  const nombre = prompt("Nombre del cliente:", cliente.nombre);
+  if (nombre === null) return;
+
+  const telefono = prompt("Teléfono:", cliente.telefono || "");
+  if (telefono === null) return;
+
+  const email = prompt("Correo electrónico:", cliente.email || "");
+  if (email === null) return;
+
+  const direccion = prompt("Dirección:", cliente.direccion || "");
+  if (direccion === null) return;
+
+  const notas = prompt("Notas:", cliente.notas || "");
+  if (notas === null) return;
+   
+    const nombreOriginal = cliente.nombre;
+const telefonoOriginal = cliente.telefono;
+    cliente.nombre = nombre;
+cliente.telefono = telefono;
+cliente.email = email;
+cliente.direccion = direccion;
+cliente.notas = notas;
+
+const clientes = JSON.parse(
+  localStorage.getItem("clientesCRUSAA")
+) || [];
+const index = clientes.findIndex(c =>
+  c.nombre === nombreOriginal ||
+  (c.telefono && c.telefono === telefonoOriginal)
+);
+if (index !== -1) {
+  clientes[index] = cliente;
+
+  localStorage.setItem(
+    "clientesCRUSAA",
+    JSON.stringify(clientes)
+  );
+}
+
+localStorage.setItem(
+  "clienteActual",
+  JSON.stringify(cliente)
+);
+};
   </script>
 
 </body>
