@@ -244,7 +244,10 @@
       <p>📞 ${llamada.telefono}</p>
       ${llamada.email ? `<p>✉️ ${llamada.email}</p>` : ""}
       <p>Resultado: ${llamada.resultado}</p>
-      ${llamada.seguimiento ? `<p>📅 Seguimiento: ${llamada.seguimiento}</p>` : ""}
+     ${llamada.seguimiento ? `<p>📅 Seguimiento: ${new Date(llamada.seguimiento).toLocaleString("es-US", {
+  dateStyle: "long",
+  timeStyle: "short"
+})}</p>` : ""} 
       ${llamada.notas ? `<p>📝 ${llamada.notas}</p>` : ""}
     `;
 const editar = document.createElement("button");
