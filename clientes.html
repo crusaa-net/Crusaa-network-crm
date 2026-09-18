@@ -377,6 +377,26 @@ localStorage.setItem("citasCRUSAA", JSON.stringify(citas));
   window.location.href = "referidos.html";
   }
   mostrarClientes();
+  function buscarClientes() {
+  const texto = document
+    .getElementById("buscarCliente")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const tarjetas = document.querySelectorAll("#listaClientes .cliente");
+
+  tarjetas.forEach((tarjeta, index) => {
+    const cliente = clientes[index];
+
+    const coincide =
+      (cliente.nombre || "").toLowerCase().includes(texto) ||
+      (cliente.telefono || "").toLowerCase().includes(texto) ||
+      (cliente.email || "").toLowerCase().includes(texto);
+
+    tarjeta.style.display = coincide ? "" : "none";
+  });
+  }
 function convertirFotoBase64(archivo) {
   return new Promise((resolve, reject) => {
     const lector = new FileReader();
