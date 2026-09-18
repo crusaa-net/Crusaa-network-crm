@@ -319,7 +319,9 @@ function editarLlamada(index) {
   llamada.seguimiento &&
   new Date(llamada.seguimiento) >= new Date()
 );
-
+pendientes.sort((a, b) =>
+  new Date(a.seguimiento) - new Date(b.seguimiento)
+);
   if (pendientes.length === 0) {
     lista.innerHTML = "<p>No hay seguimientos pendientes.</p>";
     return;
