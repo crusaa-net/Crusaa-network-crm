@@ -235,6 +235,21 @@ localStorage.setItem(
   "clienteActual",
   JSON.stringify(cliente)
 );
+    document.getElementById("nombreCliente").textContent =
+  cliente.nombre;
+
+document.getElementById("telefonoCliente").textContent =
+  "📞 " + (cliente.telefono || "");
+
+document.getElementById("emailCliente").textContent =
+  "✉️ " + (cliente.email || "");
+
+document.getElementById("direccionCliente").textContent =
+  "📍 " + (cliente.direccion || "Sin dirección");
+
+document.getElementById("notasCliente").textContent =
+  cliente.notas || "Sin notas";
+    alert("ACTUALIZACIÓN EJECUTADA");
 };
   </script>
 
