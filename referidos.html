@@ -200,15 +200,35 @@ clienteOrigen: JSON.parse(
     return;
   }
 
-  delCliente.forEach(referido => {
+  delCliente.forEach((referido, index) => {
   contenedor.innerHTML +=
     '<div class="tarjetaReferido">' +
-      '<strong>👤 ' + referido.nombre + ' ' + referido.apellido + '</strong><br>' +
-      '📞 ' + referido.telefono +
+    '<strong>👤 ' + referido.nombre + ' ' +
+    referido.apellido + '</strong><br>' +
+    '📞 ' + referido.telefono + '<br><br>' +
+    '<button onclick="eliminarReferido(\'' + referido.telefono + '\')">🗑️ Eliminar</button>' +
     '</div>';
 });
 }
+function eliminarReferido(telefono) {
+  if (!confirm("¿Eliminar este referido?")) {
+    return;
+  }
 
+  let referidos =
+    JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
+
+  referidos = referidos.filter(
+    referido => referido.telefono !== telefono
+  );
+
+  localStorage.setItem(
+    "referidosCRUSAA",
+    JSON.stringify(referidos)
+  );
+
+  mostrarReferidosDelCliente();
+}
 mostrarReferidosDelCliente();
 </script>
 </body>
