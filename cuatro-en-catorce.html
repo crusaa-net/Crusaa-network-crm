@@ -226,7 +226,8 @@ clientes.forEach(function(cliente) {
   opcion.value = cliente.nombre;
   opcion.textContent = cliente.nombre;
   clientePrograma.appendChild(opcion);
-});     
+});
+              clientePrograma.addEventListener("change", mostrarReferidos);
               let referidos = JSON.parse(
   localStorage.getItem("referidos4en14")
 ) || [];
@@ -273,6 +274,10 @@ function mostrarReferidos() {
   lista.innerHTML = "";
 
   referidos.forEach((referido, index) => {
+  if (clientePrograma.value !== "" &&
+    referido.cliente !== clientePrograma.value) {
+  return;
+  }
     const tarjeta = document.createElement("div");
     tarjeta.className = "referido";
 
