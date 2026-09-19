@@ -277,7 +277,14 @@ botonEditar.onclick = function () {
 };
 
 tarjeta.appendChild(botonEditar);
-    
+   const botonEliminar = document.createElement("button");
+botonEliminar.textContent = "🗑️ Eliminar";
+
+botonEliminar.onclick = function () {
+  eliminarReferido(index);
+};
+
+tarjeta.appendChild(botonEliminar); 
     lista.appendChild(tarjeta);
   });
 }
@@ -316,6 +323,20 @@ function cambiarEstado(index) {
   referidos[index].telefono = telefono.trim();
   referidos[index].relacion = relacion.trim();
   referidos[index].notas = notas.trim();
+
+  localStorage.setItem(
+    "referidos4en14",
+    JSON.stringify(referidos)
+  );
+
+  mostrarReferidos();
+              }
+              function eliminarReferido(index) {
+  if (!confirm("¿Eliminar este referido?")) {
+    return;
+  }
+
+  referidos.splice(index, 1);
 
   localStorage.setItem(
     "referidos4en14",
