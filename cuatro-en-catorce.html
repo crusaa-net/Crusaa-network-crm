@@ -269,6 +269,15 @@ botonEstado.onclick = function () {
 };
 
 tarjeta.appendChild(botonEstado);
+    const botonEditar = document.createElement("button");
+botonEditar.textContent = "✏️ Editar";
+
+botonEditar.onclick = function () {
+  editarReferido(index);
+};
+
+tarjeta.appendChild(botonEditar);
+    
     lista.appendChild(tarjeta);
   });
 }
@@ -288,6 +297,33 @@ function cambiarEstado(index) {
 
   mostrarReferidos();
 }
+              function editarReferido(index) {
+  const referido = referidos[index];
+
+  const nombre = prompt("Nombre del referido:", referido.nombre);
+  if (nombre === null) return;
+
+  const telefono = prompt("Teléfono:", referido.telefono);
+  if (telefono === null) return;
+
+  const relacion = prompt("Relación:", referido.relacion);
+  if (relacion === null) return;
+
+  const notas = prompt("Notas:", referido.notas || "");
+  if (notas === null) return;
+
+  referidos[index].nombre = nombre.trim();
+  referidos[index].telefono = telefono.trim();
+  referidos[index].relacion = relacion.trim();
+  referidos[index].notas = notas.trim();
+
+  localStorage.setItem(
+    "referidos4en14",
+    JSON.stringify(referidos)
+  );
+
+  mostrarReferidos();
+              }
 mostrarReferidos();
 
 </script>
