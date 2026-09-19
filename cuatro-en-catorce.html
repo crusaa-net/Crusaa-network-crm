@@ -270,7 +270,13 @@ function mostrarReferidos() {
   const lista = document.getElementById("listaReferidos");
   const total = document.getElementById("totalReferidos");
 
-  total.textContent = referidos.length;
+  const referidosDelCliente = clientePrograma.value === ""
+  ? referidos
+  : referidos.filter(function(referido) {
+      return referido.cliente === clientePrograma.value;
+    });
+
+total.textContent = referidosDelCliente.length;
   lista.innerHTML = "";
 
   referidos.forEach((referido, index) => {
