@@ -278,6 +278,7 @@ function mostrarReferidos() {
 
     tarjeta.innerHTML =
       "<strong>" + referido.nombre + "</strong><br>" +
+      "👤 Referido por: " + (referido.cliente || "Sin especificar") + "<br>" +
       "📞 " + referido.telefono + "<br>" +
       "Relación: " + (referido.relacion || "Sin especificar") + "<br>" +
       (referido.notas ? "📝 " + referido.notas + "<br>" : "") +
