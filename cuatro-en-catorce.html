@@ -271,7 +271,8 @@
             <div class="lista">
 <h3>Referidos: <span id="totalReferidos">0</span></h3>
               <h3>Demostraciones: <span id="totalDemostraciones">0</span> / 4</h3>
-  <div id="listaReferidos"></div>
+ <h3>Ventas: <span id="totalVentas">0</span> / 4</h3>
+              <div id="listaReferidos"></div>
               <div id="modalEstado" class="modal-estado">
   <div class="modal-contenido">
     <h2>Selecciona el nuevo estado</h2>
@@ -356,6 +357,13 @@ total.textContent = referidosDelCliente.length;
 
 document.getElementById("totalDemostraciones").textContent =
   totalDemostraciones;
+  const totalVentas =
+  referidosDelCliente.filter(function(referido) {
+    return referido.estado === "Venta";
+  }).length;
+
+document.getElementById("totalVentas").textContent =
+  totalVentas;
   lista.innerHTML = "";
 
   referidos.forEach((referido, index) => {
