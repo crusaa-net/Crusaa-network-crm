@@ -233,3 +233,31 @@ document.getElementById("notasReferido").value = "";
 
 mostrarReferidos();
               }
+function mostrarReferidos() {
+  const lista = document.getElementById("listaReferidos");
+  const total = document.getElementById("totalReferidos");
+
+  total.textContent = referidos.length;
+  lista.innerHTML = "";
+
+  referidos.forEach((referido) => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "referido";
+
+    tarjeta.innerHTML =
+      "<strong>" + referido.nombre + "</strong><br>" +
+      "📞 " + referido.telefono + "<br>" +
+      "Relación: " + (referido.relacion || "Sin especificar") + "<br>" +
+      (referido.notas ? "📝 " + referido.notas + "<br>" : "") +
+      '<span class="estado">' + referido.estado + "</span>";
+
+    lista.appendChild(tarjeta);
+  });
+}
+
+mostrarReferidos();
+
+</script>
+</div>
+</body>
+</html>
