@@ -215,6 +215,18 @@
   <div id="listaReferidos"></div>
             </div>
             <script>
+         const clientes =
+  JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+
+const clientePrograma =
+  document.getElementById("clientePrograma");
+
+clientes.forEach(function(cliente) {
+  const opcion = document.createElement("option");
+  opcion.value = cliente.nombre;
+  opcion.textContent = cliente.nombre;
+  clientePrograma.appendChild(opcion);
+});     
               let referidos = JSON.parse(
   localStorage.getItem("referidos4en14")
 ) || [];
