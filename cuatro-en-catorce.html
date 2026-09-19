@@ -241,7 +241,7 @@ function mostrarReferidos() {
   total.textContent = referidos.length;
   lista.innerHTML = "";
 
-  referidos.forEach((referido) => {
+  referidos.forEach((referido, index) => {
     const tarjeta = document.createElement("div");
     tarjeta.className = "referido";
 
@@ -251,11 +251,33 @@ function mostrarReferidos() {
       "Relación: " + (referido.relacion || "Sin especificar") + "<br>" +
       (referido.notas ? "📝 " + referido.notas + "<br>" : "") +
       '<span class="estado">' + referido.estado + "</span>";
+const botonEstado = document.createElement("button");
+botonEstado.textContent = "Cambiar estado";
 
+botonEstado.onclick = function () {
+  cambiarEstado(index);
+};
+
+tarjeta.appendChild(botonEstado);
     lista.appendChild(tarjeta);
   });
 }
+function cambiarEstado(index) {
+  const estados = ["Pendiente", "Contactado", "Cita", "Completado"];
 
+  const actual = referidos[index].estado;
+  const posicion = estados.indexOf(actual);
+
+  referidos[index].estado =
+    estados[(posicion + 1) % estados.length];
+
+  localStorage.setItem(
+    "referidos4en14",
+    JSON.stringify(referidos)
+  );
+
+  mostrarReferidos();
+}
 mostrarReferidos();
 
 </script>
