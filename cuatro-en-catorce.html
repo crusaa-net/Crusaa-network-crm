@@ -231,15 +231,22 @@ clientes.forEach(function(cliente) {
   localStorage.getItem("referidos4en14")
 ) || [];
               function guardarReferido() {
+                const cliente =
+  document.getElementById("clientePrograma").value;
   const nombre = document.getElementById("nombreReferido").value.trim();
   const telefono = document.getElementById("telefonoReferido").value.trim();
   const relacion = document.getElementById("relacionReferido").value;
   const notas = document.getElementById("notasReferido").value.trim();
+    if (cliente === "") {
+  alert("Selecciona el cliente del programa 4 en 14.");
+  return;
+    }            
                 if (nombre === "" || telefono === "") {
   alert("Escribe el nombre y teléfono del referido.");
   return;
                 }
                 referidos.push({
+  cliente: cliente,
   nombre: nombre,
   telefono: telefono,
   relacion: relacion,
