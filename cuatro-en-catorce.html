@@ -145,6 +145,25 @@
       color: #08203d;
       font-weight: bold;
     }
+    .estado-pendiente {
+  background: #f5c65b;
+}
+
+.estado-contactado {
+  background: #4da3ff;
+}
+
+.estado-cita {
+  background: #b58cff;
+}
+
+.estado-demostracion {
+  background: #5fcf80;
+}
+
+.estado-venta {
+  background: #ffd700;
+}
     .referido button {
   margin: 6px 5px;
   padding: 8px 14px;
@@ -353,7 +372,9 @@ document.getElementById("totalDemostraciones").textContent =
       "📞 " + referido.telefono + "<br>" +
       "Relación: " + (referido.relacion || "Sin especificar") + "<br>" +
       (referido.notas ? "📝 " + referido.notas + "<br>" : "") +
-      '<span class="estado">' + referido.estado + "</span>";
+    '<span class="estado estado-' +
+referido.estado.toLowerCase().replace("ó", "o") + '">' +
+      referido.estado + "</span>";
 const botonEstado = document.createElement("button");
 botonEstado.textContent = "Cambiar estado";
 
