@@ -330,6 +330,13 @@ function mostrarReferidos() {
     });
 
 total.textContent = referidosDelCliente.length;
+  const totalDemostraciones =
+  referidosDelCliente.filter(function(referido) {
+    return referido.estado === "Demostración";
+  }).length;
+
+document.getElementById("totalDemostraciones").textContent =
+  totalDemostraciones;
   lista.innerHTML = "";
 
   referidos.forEach((referido, index) => {
