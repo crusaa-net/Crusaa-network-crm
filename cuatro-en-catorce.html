@@ -3,42 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>4 en 14 - CRUSAA Network CRM</title>
+  <title>Programa 4 en 14</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      padding: 25px;
-      background: #071426;
+      background: #061426;
       color: white;
       font-family: Arial, sans-serif;
     }
 
-    .volver {
-      display: inline-block;
+    .contenedor {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .encabezado {
+      display: flex;
+      align-items: center;
+      gap: 18px;
       margin-bottom: 20px;
+    }
+
+    .volver {
       color: white;
       text-decoration: none;
+      font-size: 34px;
+    }
+
+    .titulo {
+      margin: 0;
+      font-size: 28px;
+    }
+        .panel {
+      background: #fff8e8;
+      color: #08203d;
+      border: 2px solid #d6ad54;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .logo-programa {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-programa .personas {
+      font-size: 55px;
+    }
+
+    .logo-programa h2 {
+      font-size: 48px;
+      margin: 5px 0;
+      color: #082f63;
+    }
+
+    .logo-programa p {
+      margin: 0;
+      font-weight: bold;
+      color: #36516f;
+    }
+
+    .mensaje {
+      text-align: center;
+      margin: 25px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #123c73;
+    }
+        .formulario {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .formulario input,
+    .formulario select,
+    .formulario textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #d5dce5;
+      border-radius: 14px;
+      font-size: 17px;
+      background: white;
+      color: #08203d;
+    }
+
+    .formulario textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .guardar {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(#f5c65b, #c88a22);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+        .lista {
+      margin-top: 25px;
+      background: #08203d;
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .lista h3 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .referido {
+      background: #0b3158;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .referido strong {
       font-size: 18px;
     }
 
-    .subtitulo {
-      color: #b8c4d6;
-      font-size: 18px;
+    .estado {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #f5c65b;
+      color: #08203d;
+      font-weight: bold;
     }
-  </style>
+      </style>
 </head>
 
 <body>
 
-  <a class="volver" href="crm.html">← Volver</a>
+  <div class="contenedor">
 
-  <h1>🎯 4 en 14</h1>
+    <div class="encabezado">
+      <a class="volver" href="crm.html">←</a>
+      <h1 class="titulo">Programa 4 en 14</h1>
+    </div>
 
-  <p class="subtitulo">
-    Seguimiento de tu objetivo de 4 presentaciones
-  </p>
+    <div class="panel">
 
-</body>
-</html>
+      <div class="logo-programa">
+        <div class="personas">👥</div>
+        <h2>4 en 14</h2>
+        <p>Juntos multiplicamos beneficios</p>
+      </div>
+
+      <div class="mensaje">
+        TU AYUDA HACE LA DIFERENCIA<br>
+        4 referidos en 14 días
+      </div>
+            <div class="formulario">
+
+        <input
+          type="text"
+          id="nombreReferido"
+          placeholder="Nombre del referido">
+
+        <input
+          type="tel"
+          id="telefonoReferido"
+          placeholder="Teléfono">
+
+        <select id="relacionReferido">
+          <option value="">Relación (Familiar, Amigo, Vecino, etc.)</option>
+          <option>Familiar</option>
+          <option>Amigo</option>
+          <option>Vecino</option>
+          <option>Compañero de trabajo</option>
+          <option>Otro</option>
+        </select>
+
+        <textarea
+          id="notasReferido"
+          placeholder="Notas (opcional)"></textarea>
+
+        <button class="guardar" onclick="guardarReferido()">
+          Guardar Referido
+        </button>
+
+            </div>
+            <div class="lista">
+  <h3>Referidos (<span id="totalReferidos">0</span>)</h3>
+  <div id="listaReferidos"></div>
+            </div>
+            <script>
+              let referidos = JSON.parse(
+  localStorage.getItem("referidos4en14")
+) || [];
+              function guardarReferido() {
+  const nombre = document.getElementById("nombreReferido").value.trim();
+  const telefono = document.getElementById("telefonoReferido").value.trim();
+  const relacion = document.getElementById("relacionReferido").value;
+  const notas = document.getElementById("notasReferido").value.trim();
+                if (nombre === "" || telefono === "") {
+  alert("Escribe el nombre y teléfono del referido.");
+  return;
+                }
+                referidos.push({
+  nombre: nombre,
+  telefono: telefono,
+  relacion: relacion,
+  notas: notas,
+  estado: "Pendiente"
+});
+
+localStorage.setItem(
+  "referidos4en14",
+  JSON.stringify(referidos)
+);
+                document.getElementById("nombreReferido").value = "";
+document.getElementById("telefonoReferido").value = "";
+document.getElementById("relacionReferido").value = "";
+document.getElementById("notasReferido").value = "";
+
+mostrarReferidos();
+              }
