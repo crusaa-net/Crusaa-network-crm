@@ -324,13 +324,34 @@ tarjeta.appendChild(botonEliminar);
   });
 }
 function cambiarEstado(index) {
-  const estados = ["Pendiente", "Contactado", "Cita", "Completado"];
+  const referido = referidos[index];
 
-  const actual = referidos[index].estado;
-  const posicion = estados.indexOf(actual);
+  const opcion = prompt(
+    "Selecciona el nuevo estado:\n\n" +
+    "1 - Pendiente\n" +
+    "2 - Contactado\n" +
+    "3 - Cita\n" +
+    "4 - Demostración\n" +
+    "5 - Venta\n\n" +
+    "Estado actual: " + referido.estado
+  );
 
-  referidos[index].estado =
-    estados[(posicion + 1) % estados.length];
+  if (opcion === null) return;
+
+  const estados = {
+    "1": "Pendiente",
+    "2": "Contactado",
+    "3": "Cita",
+    "4": "Demostración",
+    "5": "Venta"
+  };
+
+  if (!estados[opcion]) {
+    alert("Opción no válida. El estado no fue modificado.");
+    return;
+  }
+
+  referido.estado = estados[opcion];
 
   localStorage.setItem(
     "referidos4en14",
