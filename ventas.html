@@ -86,6 +86,32 @@
     .buscador::placeholder {
       color: #c8d3df;
     }
+    .barra-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #06182b;
+  border-top: 1px solid #1688c9;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.boton-inicio {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.icono-inicio {
+  font-size: 30px;
+  line-height: 32px;
+}
   </style>
 </head>
 
@@ -116,6 +142,11 @@
     >
 
   </div>
-
+<div class="barra-inferior">
+  <a href="crm.html" class="boton-inicio">
+    <span class="icono-inicio">🏠</span>
+    <span>Inicio</span>
+  </a>
+</div>
 </body>
 </html>
