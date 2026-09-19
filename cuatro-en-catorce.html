@@ -215,6 +215,19 @@
 <h3>Referidos: <span id="totalReferidos">0</span></h3>
               <h3>Demostraciones: <span id="totalDemostraciones">0</span> / 4</h3>
   <div id="listaReferidos"></div>
+              <div id="modalEstado" class="modal-estado">
+  <div class="modal-contenido">
+    <h2>Selecciona el nuevo estado</h2>
+
+    <button onclick="seleccionarEstado('Pendiente')">🟡 Pendiente</button>
+    <button onclick="seleccionarEstado('Contactado')">🔵 Contactado</button>
+    <button onclick="seleccionarEstado('Cita')">📅 Cita</button>
+    <button onclick="seleccionarEstado('Demostración')">🏠 Demostración</button>
+    <button onclick="seleccionarEstado('Venta')">💰 Venta</button>
+
+    <button onclick="cerrarModalEstado()">Cancelar</button>
+  </div>
+            
             </div>
             <script>
          const clientes =
@@ -323,42 +336,30 @@ tarjeta.appendChild(botonEliminar);
     lista.appendChild(tarjeta);
   });
 }
+let referidoEstadoIndex = null;
+
 function cambiarEstado(index) {
-  const referido = referidos[index];
+  referidoEstadoIndex = index;
+  document.getElementById("modalEstado").style.display = "flex";
+}
 
-  const opcion = prompt(
-    "Selecciona el nuevo estado:\n\n" +
-    "1 - Pendiente\n" +
-    "2 - Contactado\n" +
-    "3 - Cita\n" +
-    "4 - Demostración\n" +
-    "5 - Venta\n\n" +
-    "Estado actual: " + referido.estado
-  );
+function seleccionarEstado(nuevoEstado) {
+  if (referidoEstadoIndex === null) return;
 
-  if (opcion === null) return;
-
-  const estados = {
-    "1": "Pendiente",
-    "2": "Contactado",
-    "3": "Cita",
-    "4": "Demostración",
-    "5": "Venta"
-  };
-
-  if (!estados[opcion]) {
-    alert("Opción no válida. El estado no fue modificado.");
-    return;
-  }
-
-  referido.estado = estados[opcion];
+  referidos[referidoEstadoIndex].estado = nuevoEstado;
 
   localStorage.setItem(
     "referidos4en14",
     JSON.stringify(referidos)
   );
 
+  cerrarModalEstado();
   mostrarReferidos();
+}
+
+function cerrarModalEstado() {
+  document.getElementById("modalEstado").style.display = "none";
+  referidoEstadoIndex = null;
 }
               function editarReferido(index) {
   const referido = referidos[index];
