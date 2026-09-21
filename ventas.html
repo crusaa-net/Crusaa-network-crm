@@ -182,6 +182,26 @@ localStorage.setItem(
 lista.appendChild(venta);
   
 }
+  function mostrarVentasGuardadas() {
+  const ventas =
+    JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
+
+  const lista =
+    document.getElementById("listaVentas");
+
+  ventas.forEach(function(datos) {
+    const venta = document.createElement("div");
+
+    venta.innerHTML =
+      "<strong>" + datos.nombre + "</strong><br>" +
+      "Producto: " + datos.producto + "<br>" +
+      "Monto: $" + datos.monto;
+
+    lista.appendChild(venta);
+  });
+}
+
+mostrarVentasGuardadas();
 </script>
 </body>
 </html>
