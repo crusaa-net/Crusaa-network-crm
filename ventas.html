@@ -159,6 +159,8 @@ function nuevaVenta() {
 
   const monto = prompt("Monto de la venta:");
   if (monto === null) return;
+  const estado = prompt("Estado de la venta: Pagada o Pendiente");
+if (estado === null) return;
 const lista = document.getElementById("listaVentas");
 
 const venta = document.createElement("div");
@@ -172,7 +174,8 @@ const ventas =
 ventas.push({
   nombre: nombre,
   producto: producto,
-  monto: monto
+  monto: monto,
+estado: estado
 });
 
 localStorage.setItem(
