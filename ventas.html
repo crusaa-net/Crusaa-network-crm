@@ -150,7 +150,20 @@
 </div>
 <script>
 function nuevaVenta() {
-  alert("Nueva venta");
+  const nombre = prompt("Nombre del cliente:");
+  if (nombre === null || nombre.trim() === "") return;
+
+  const producto = prompt("Producto vendido:");
+  if (producto === null) return;
+
+  const monto = prompt("Monto de la venta:");
+  if (monto === null) return;
+
+  alert(
+    "Cliente: " + nombre +
+    "\nProducto: " + producto +
+    "\nMonto: $" + monto
+  );
 }
 </script>
 </body>
