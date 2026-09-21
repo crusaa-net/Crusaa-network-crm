@@ -202,13 +202,21 @@ mostrarVentasGuardadas();
     document.getElementById("listaVentas");
 lista.innerHTML = "";
   ventas.forEach(function(datos) {
+    const estadoTexto = (datos.estado || "").trim().toLowerCase();
+
+const estadoNormalizado =
+  estadoTexto.startsWith("paga")
+    ? "Pagada"
+    : estadoTexto.startsWith("pend")
+      ? "Pendiente"
+      : "Sin estado";
     const venta = document.createElement("div");
 
     venta.innerHTML =
       "<strong>" + datos.nombre + "</strong><br>" +
       "Producto: " + datos.producto + "<br>" +
       "Monto: $" + datos.monto + "<br>" +
-"Estado: " + (datos.estado || "Sin estado");
+"Estado: " + estadoNormalizado;
     lista.appendChild(venta);
   });
 }
