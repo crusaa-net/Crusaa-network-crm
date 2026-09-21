@@ -132,8 +132,8 @@
 
     <div class="filtros">
       <button class="filtro activo">Todas</button>
-      <button class="filtro">Pagadas</button>
-      <button class="filtro">Pendientes</button>
+      <button class="filtro" onclick="filtrarVentas('Pagada')">Pagadas</button>
+     <button class="filtro" onclick="filtrarVentas('Pendiente')">Pendientes</button> 
     </div>
 
     <input
@@ -203,7 +203,30 @@ lista.appendChild(venta);
     lista.appendChild(venta);
   });
 }
+function filtrarVentas(estado) {
+  const ventas =
+    JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
 
+  const lista =
+    document.getElementById("listaVentas");
+
+  lista.innerHTML = "";
+
+  ventas
+    .filter(function(datos) {
+      return datos.estado === estado;
+    })
+    .forEach(function(datos) {
+      const venta = document.createElement("div");
+
+      venta.innerHTML =
+        "<strong>" + datos.nombre + "</strong><br>" +
+        "Producto: " + datos.producto + "<br>" +
+        "Monto: $" + datos.monto;
+
+      lista.appendChild(venta);
+    });
+}
 mostrarVentasGuardadas();
 </script>
 </body>
