@@ -166,7 +166,19 @@ venta.innerHTML =
   "<strong>" + nombre + "</strong><br>" +
   "Producto: " + producto + "<br>" +
   "Monto: $" + monto;
+const ventas =
+  JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
 
+ventas.push({
+  nombre: nombre,
+  producto: producto,
+  monto: monto
+});
+
+localStorage.setItem(
+  "ventasCRUSAA",
+  JSON.stringify(ventas)
+);
 lista.appendChild(venta);
   
 }
