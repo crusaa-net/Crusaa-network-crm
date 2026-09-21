@@ -240,7 +240,7 @@ function filtrarVentas(estado) {
         "<strong>" + datos.nombre + "</strong><br>" +
         "Producto: " + datos.producto + "<br>" +
         "Monto: $" + datos.monto + "<br>" +
-"Estado: " + (datos.estado || "Sin estado");
+"Estado: " + (estado.toLowerCase().startsWith("paga") ? "Pagada" : "Pendiente");
 
       lista.appendChild(venta);
     });
