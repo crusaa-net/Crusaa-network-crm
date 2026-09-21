@@ -214,7 +214,7 @@ function filtrarVentas(estado) {
 
   ventas
     .filter(function(datos) {
-      return datos.estado === estado;
+      return (datos.estado || "").toLowerCase().startsWith(estado.toLowerCase());
     })
     .forEach(function(datos) {
       const venta = document.createElement("div");
