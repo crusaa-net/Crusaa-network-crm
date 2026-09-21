@@ -142,6 +142,7 @@
     <input
       class="buscador"
       type="text"
+      oninput="buscarVentas(this.value)"
       placeholder="🔍 Buscar ventas..."
     >
 <div id="listaVentas"></div>
@@ -245,6 +246,44 @@ function filtrarVentas(estado) {
       lista.appendChild(venta);
     });
 }
+  function buscarVentas(texto) {
+  const ventas =
+    JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
+
+  const lista =
+    document.getElementById("listaVentas");
+
+  lista.innerHTML = "";
+
+  const busqueda = texto.trim().toLowerCase();
+
+  ventas
+    .filter(function(datos) {
+      return (datos.nombre || "").toLowerCase().includes(busqueda) ||
+        (datos.producto || "").toLowerCase().includes(busqueda);
+    })
+    .forEach(function(datos) {
+      const venta = document.createElement("div");
+
+      const estadoTexto =
+        (datos.estado || "").trim().toLowerCase();
+
+      const estadoNormalizado =
+        estadoTexto.startsWith("paga")
+          ? "Pagada"
+          : estadoTexto.startsWith("pend")
+          ? "Pendiente"
+          : "Sin estado";
+
+      venta.innerHTML =
+        "<strong>" + datos.nombre + "</strong><br>" +
+        "Producto: " + datos.producto + "<br>" +
+        "Monto: $" + datos.monto + "<br>" +
+        "Estado: " + estadoNormalizado;
+
+      lista.appendChild(venta);
+    });
+  }
 mostrarVentasGuardadas();
 </script>
 </body>
