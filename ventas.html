@@ -198,8 +198,8 @@ lista.appendChild(venta);
     venta.innerHTML =
       "<strong>" + datos.nombre + "</strong><br>" +
       "Producto: " + datos.producto + "<br>" +
-      "Monto: $" + datos.monto;
-
+      "Monto: $" + datos.monto + "<br>" +
+"Estado: " + (datos.estado || "Sin estado");
     lista.appendChild(venta);
   });
 }
