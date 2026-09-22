@@ -202,10 +202,10 @@ mostrarVentasGuardadas();
 }
   function mostrarVentasGuardadas() {
   const ventas =
-    JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
+   JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
 
-  const lista =
-    document.getElementById("listaVentas");
+    const lista =
+  document.getElementById("listaVentas");
 lista.innerHTML = "";
   ventas.forEach(function(datos) {
     const estadoTexto = (datos.estado || "").trim().toLowerCase();
@@ -222,7 +222,7 @@ const estadoNormalizado =
       "<strong>" + datos.nombre + "</strong><br>" +
       "Producto: " + datos.producto + "<br>" +
       "Monto: $" + datos.monto + "<br>" +
-"Estado: " + estadoNormalizado;
+
     const botonEditar = document.createElement("button");
 botonEditar.textContent = "✏️ Editar";
 
