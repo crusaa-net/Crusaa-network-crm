@@ -218,9 +218,73 @@ const estadoNormalizado =
       "Producto: " + datos.producto + "<br>" +
       "Monto: $" + datos.monto + "<br>" +
 "Estado: " + estadoNormalizado;
+    const botonEditar = document.createElement("button");
+botonEditar.textContent = "✏️ Editar";
+
+botonEditar.onclick = function () {
+  editarVenta(datos);
+};
+
+venta.appendChild(botonEditar);
     lista.appendChild(venta);
   });
 }
+function editarVenta(datos) {
+  const nombreOriginal = datos.nombre;
+const productoOriginal = datos.producto;
+const montoOriginal = datos.monto;
+const nuevoNombre = prompt(
+  "Nombre del cliente:",
+  datos.nombre
+);
+
+if (nuevoNombre === null) return;
+  const nuevoProducto = prompt(
+  "Producto vendido:",
+  datos.producto
+);
+
+if (nuevoProducto === null) return;
+  const nuevoMonto = prompt(
+  "Monto de la venta:",
+  datos.monto
+);
+
+if (nuevoMonto === null) return;
+  const nuevoEstado = prompt(
+  "Estado: Pagada o Pendiente",
+  datos.estado
+);
+
+if (nuevoEstado === null) return;
+  datos.nombre = nuevoNombre.trim();
+datos.producto = nuevoProducto.trim();
+datos.monto = nuevoMonto.trim();
+
+datos.estado =
+  nuevoEstado.trim().toLowerCase().startsWith("paga")
+    ? "Pagada"
+    : "Pendiente";
+  const ventas =
+  JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
+
+const indice = ventas.findIndex(function (venta) {
+  return venta.nombre === nombreOriginal &&
+       venta.producto === productoOriginal &&
+       venta.monto === montoOriginal;
+});
+  if (indice !== -1) {
+  ventas[indice] = datos;
+
+  localStorage.setItem(
+    "ventasCRUSAA",
+    JSON.stringify(ventas)
+  );
+
+  mostrarVentasGuardadas();
+  }
+}
+  
 function filtrarVentas(estado) {
   const ventas =
     JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
