@@ -139,12 +139,17 @@
     </div>
 
     <div class="filtros">
-      <button class="filtro" onclick="mostrarVentasGuardadas()">Todas</button>
-<button class="filtro" onclick="filtrarVentas('Pagada')">Pagadas</button>
-<button class="filtro" onclick="filtrarVentas('Pendiente')">Pendientes</button>
+      <button class="filtro"
+onclick="filtrarVentasConBusqueda('Todas')">Todas</button>
+
+<button class="filtro"
+onclick="filtrarVentasConBusqueda('Pagada')">Pagadas</button>
+
+<button class="filtro"
+onclick="filtrarVentasConBusqueda('Pendiente')">Pendientes</button>
     </div>
 
-    <input
+    <input id="buscadorVentas"
       class="buscador"
       type="text"
       oninput="buscarVentas(this.value)"
@@ -324,6 +329,18 @@ const indice = ventas.findIndex(function (venta) {
     mostrarVentasGuardadas();
   }
  } 
+  function filtrarVentasConBusqueda(estado) {
+  const buscador = document.getElementById("buscadorVentas");
+  const texto = buscador.value.trim();
+
+  if (texto !== "") {
+    buscarVentas(texto, estado);
+  } else if (estado === "Todas") {
+    mostrarVentasGuardadas();
+  } else {
+    filtrarVentas(estado);
+  }
+  }
 function filtrarVentas(estado) {
   const ventas =
     JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
@@ -367,7 +384,7 @@ venta.appendChild(botonEliminar);
       lista.appendChild(venta);
     });
 }
-  function buscarVentas(texto) {
+  function buscarVentas(texto, estado = "Todas") {
   const ventas =
     JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
 
@@ -380,9 +397,18 @@ venta.appendChild(botonEliminar);
 
   ventas
     .filter(function(datos) {
-      return (datos.nombre || "").toLowerCase().includes(busqueda) ||
-        (datos.producto || "").toLowerCase().includes(busqueda);
-    })
+  const coincideBusqueda =
+    (datos.nombre || "").toLowerCase().includes(busqueda) ||
+    (datos.producto || "").toLowerCase().includes(busqueda);
+
+  const coincideEstado =
+    estado === "Todas" ||
+    (datos.estado || "").toLowerCase().startsWith(
+      estado.toLowerCase()
+    );
+
+  return coincideBusqueda && coincideEstado;
+})
     .forEach(function(datos) {
       const venta = document.createElement("div");
 
