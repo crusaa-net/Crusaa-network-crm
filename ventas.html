@@ -427,7 +427,23 @@ venta.appendChild(botonEliminar);
         "Producto: " + datos.producto + "<br>" +
         "Monto: $" + datos.monto + "<br>" +
         "Estado: " + estadoNormalizado;
+const botonEditar = document.createElement("button");
+botonEditar.textContent = "✏️ Editar";
 
+botonEditar.onclick = function () {
+  editarVenta(datos);
+};
+
+venta.appendChild(botonEditar);
+
+const botonEliminar = document.createElement("button");
+botonEliminar.textContent = "🗑️ Eliminar";
+
+botonEliminar.onclick = function () {
+  eliminarVenta(datos);
+};
+
+venta.appendChild(botonEliminar);
       lista.appendChild(venta);
     });
   }
