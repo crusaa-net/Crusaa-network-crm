@@ -354,6 +354,16 @@ botonEditar.onclick = function () {
 };
 
 venta.appendChild(botonEditar);
+      const botonEliminar =
+  document.createElement("button");
+
+botonEliminar.textContent = "🗑️ Eliminar";
+
+botonEliminar.onclick = function () {
+  eliminarVenta(datos);
+};
+
+venta.appendChild(botonEliminar);
       lista.appendChild(venta);
     });
 }
