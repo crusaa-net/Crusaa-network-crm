@@ -226,6 +226,16 @@ botonEditar.onclick = function () {
 };
 
 venta.appendChild(botonEditar);
+    const botonEliminar =
+  document.createElement("button");
+
+botonEliminar.textContent = "🗑️ Eliminar";
+
+botonEliminar.onclick = function () {
+  eliminarVenta(datos);
+};
+
+venta.appendChild(botonEliminar);
     lista.appendChild(venta);
   });
 }
@@ -284,7 +294,31 @@ const indice = ventas.findIndex(function (venta) {
   mostrarVentasGuardadas();
   }
 }
-  
+ function eliminarVenta(datos) {
+  if (!confirm("¿Eliminar esta venta?")) {
+    return;
+  }
+
+  const ventas =
+    JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
+
+  const indice = ventas.findIndex(function (venta) {
+    return venta.nombre === datos.nombre &&
+      venta.producto === datos.producto &&
+      venta.monto === datos.monto;
+  });
+
+  if (indice !== -1) {
+    ventas.splice(indice, 1);
+
+    localStorage.setItem(
+      "ventasCRUSAA",
+      JSON.stringify(ventas)
+    );
+
+    mostrarVentasGuardadas();
+  }
+ } 
 function filtrarVentas(estado) {
   const ventas =
     JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
