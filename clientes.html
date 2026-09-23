@@ -383,7 +383,11 @@ const nombreAnterior = cliente.nombre;
 
   const correo = prompt("Correo electrónico:", cliente.email);
   if (correo === null) return;
-
+const direccion = prompt(
+  "Dirección:",
+  cliente.direccion || ""
+);
+if (direccion === null) return;
   const notas = prompt("Notas:", cliente.notas);
   if (notas === null) return;
 
@@ -391,6 +395,7 @@ const nombreAnterior = cliente.nombre;
     nombre: nombre,
     telefono: telefono,
     email: correo,
+    direccion: direccion,
     notas: notas,
     foto: cliente.foto || ""
   };
