@@ -404,23 +404,7 @@ if (clientePrograma.value !== "") {
     '<span class="estado estado-' +
 referido.estado.toLowerCase().replace("ó", "o") + '">' +
       referido.estado + "</span>";
-    const clienteEncontrado = clientes.find(function(cliente) {
-  return (cliente.nombre || "").trim().toLowerCase() ===
-    (referido.cliente || "").trim().toLowerCase();
-});
-
-if (clienteEncontrado && clienteEncontrado.foto) {
-  const fotoCliente = document.createElement("img");
-  fotoCliente.src = clienteEncontrado.foto;
-  fotoCliente.style.width = "55px";
-  fotoCliente.style.height = "55px";
-  fotoCliente.style.borderRadius = "50%";
-  fotoCliente.style.objectFit = "cover";
-  fotoCliente.style.display = "block";
-  fotoCliente.style.margin = "8px 0";
-
-  tarjeta.appendChild(fotoCliente);
-}
+    
 const botonEstado = document.createElement("button");
 botonEstado.textContent = "Cambiar estado";
 
