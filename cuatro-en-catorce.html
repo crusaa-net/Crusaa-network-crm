@@ -367,7 +367,26 @@ document.getElementById("totalDemostraciones").textContent =
 document.getElementById("totalVentas").textContent =
   totalVentas;
   lista.innerHTML = "";
+if (clientePrograma.value !== "") {
+  const clienteSeleccionado =
+    clientes.find(function(cliente) {
+      return (cliente.nombre || "").trim().toLowerCase() ===
+        clientePrograma.value.trim().toLowerCase();
+    });
 
+  if (clienteSeleccionado && clienteSeleccionado.foto) {
+    const fotoPrincipal = document.createElement("img");
+    fotoPrincipal.src = clienteSeleccionado.foto;
+    fotoPrincipal.style.width = "90px";
+    fotoPrincipal.style.height = "90px";
+    fotoPrincipal.style.borderRadius = "50%";
+    fotoPrincipal.style.objectFit = "cover";
+    fotoPrincipal.style.display = "block";
+    fotoPrincipal.style.margin = "0 auto 20px auto";
+
+    lista.appendChild(fotoPrincipal);
+  }
+}
   referidos.forEach((referido, index) => {
   if (clientePrograma.value !== "" &&
     referido.cliente !== clientePrograma.value) {
