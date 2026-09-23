@@ -208,11 +208,16 @@ mostrarVentasGuardadas();
   function mostrarVentasGuardadas() {
   const ventas =
    JSON.parse(localStorage.getItem("ventasCRUSAA")) || [];
-
+const clientes =
+  JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
     const lista =
   document.getElementById("listaVentas");
 lista.innerHTML = "";
   ventas.forEach(function(datos) {
+    const clienteEncontrado = clientes.find(function(cliente) {
+  return (cliente.nombre || "").trim().toLowerCase() ===
+         (datos.nombre || "").trim().toLowerCase();
+});
     const estadoTexto = (datos.estado || "").trim().toLowerCase();
 
 const estadoNormalizado =
@@ -228,6 +233,18 @@ const estadoNormalizado =
       "Producto: " + datos.producto + "<br>" +
       "Monto: $" + datos.monto + "<br>" +
 "Estado: " + estadoNormalizado + "<br>";
+    if (clienteEncontrado && clienteEncontrado.foto) {
+  const fotoCliente = document.createElement("img");
+  fotoCliente.src = clienteEncontrado.foto;
+  fotoCliente.style.width = "55px";
+  fotoCliente.style.height = "55px";
+  fotoCliente.style.borderRadius = "50%";
+  fotoCliente.style.objectFit = "cover";
+  fotoCliente.style.display = "block";
+  fotoCliente.style.margin = "8px 0";
+
+  venta.appendChild(fotoCliente);
+    }
     const botonEditar = document.createElement("button");
 botonEditar.textContent = "✏️ Editar";
 
