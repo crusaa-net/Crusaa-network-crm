@@ -161,7 +161,11 @@
       type="email"
       placeholder="Correo electrónico"
     >
-
+<input
+  id="direccion"
+  type="text"
+  placeholder="📍 Dirección del cliente"
+>
     <textarea
       id="notas"
       placeholder="Notas del cliente"
@@ -203,7 +207,8 @@ async function guardarCliente() {
 
     const email =
       document.getElementById("email").value.trim();
-
+const direccion =
+  document.getElementById("direccion").value.trim();
     const notas =
       document.getElementById("notas").value.trim();
 
@@ -223,6 +228,7 @@ const archivoFoto =
       nombre,
       telefono,
       email,
+      direccion,
       notas,
       foto
     });
@@ -235,6 +241,7 @@ const archivoFoto =
     document.getElementById("nombre").value = "";
     document.getElementById("telefono").value = "";
     document.getElementById("email").value = "";
+  document.getElementById("direccion").value = "";
     document.getElementById("notas").value = "";
 
     mostrarClientes();
@@ -300,7 +307,25 @@ if (cliente.foto) {
         email.textContent = "✉️ " + cliente.email;
         tarjeta.appendChild(email);
       }
+if (cliente.direccion) {
+  const direccion =
+    document.createElement("p");
 
+  const enlaceMapa =
+    document.createElement("a");
+
+  enlaceMapa.textContent =
+    "📍 " + cliente.direccion;
+
+  enlaceMapa.href =
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(cliente.direccion);
+
+  enlaceMapa.target = "_blank";
+
+  direccion.appendChild(enlaceMapa);
+  tarjeta.appendChild(direccion);
+}
       if (cliente.notas) {
         const notas = document.createElement("p");
         notas.textContent = "📝 " + cliente.notas;
