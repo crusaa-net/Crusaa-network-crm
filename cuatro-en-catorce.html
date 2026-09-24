@@ -451,23 +451,16 @@ if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
   selectorFecha.style.left = "50%";
   selectorFecha.style.transform = "translate(-50%, -50%)";
   selectorFecha.style.zIndex = "99999";
-selectorFecha.style.opacity = "0";
-selectorFecha.style.width = "1px";
-selectorFecha.style.height = "1px";
-selectorFecha.style.pointerEvents = "none";
+
   document.body.appendChild(selectorFecha);
 
-  selectorFecha.addEventListener("input", () => {
-  const valor = selectorFecha.value;
+  selectorFecha.addEventListener("change", function () {
+    const valor = selectorFecha.value;
+    selectorFecha.remove();
+    resolve(valor);
+  });
 
-  if (valor) {
-    setTimeout(() => {
-      selectorFecha.remove();
-      resolve(valor);
-    }, 300);
-  }
-}, { once: true });
-  selectorFecha.showPicker();
+  selectorFecha.click();
 });
 
 if (!fecha) return;
