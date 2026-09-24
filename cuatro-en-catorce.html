@@ -479,7 +479,7 @@ selectorHora.style.zIndex = "99999";
 
 document.body.appendChild(selectorHora);
 
-selectorHora.showPicker();
+selectorHora.click();
 
 const hora = await new Promise((resolve) => {
   selectorHora.addEventListener("change", () => {
