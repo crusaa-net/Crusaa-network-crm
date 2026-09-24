@@ -457,7 +457,17 @@ const inicio =
   "T" +
   hora.replace(":", "") +
   "00";
+const fechaInicio = new Date(fecha + "T" + hora);
+fechaInicio.setHours(fechaInicio.getHours() + 1);
 
+const fin =
+  fechaInicio.getFullYear().toString() +
+  String(fechaInicio.getMonth() + 1).padStart(2, "0") +
+  String(fechaInicio.getDate()).padStart(2, "0") +
+  "T" +
+  String(fechaInicio.getHours()).padStart(2, "0") +
+  String(fechaInicio.getMinutes()).padStart(2, "0") +
+  "00";
 const titulo =
   nuevoEstado + " - " + referido.nombre;
 
@@ -468,7 +478,7 @@ const detalles =
 const urlCalendar =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
   "&text=" + encodeURIComponent(titulo) +
-  "&dates=" + inicio + "/" + inicio +
+  "&dates=" + inicio + "/" + fin +
   "&details=" + encodeURIComponent(detalles);
 
 window.open(urlCalendar, "_blank");
