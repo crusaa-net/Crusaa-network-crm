@@ -439,9 +439,41 @@ function cambiarEstado(index) {
   document.getElementById("modalEstado").style.display = "flex";
 }
 
-function seleccionarEstado(nuevoEstado) {
+async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
+if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
+  const fecha = prompt("Fecha (AAAA-MM-DD):");
+  if (!fecha) return;
 
+  const hora = prompt("Hora (HH:MM, ejemplo 14:30):");
+  if (!hora) return;
+
+  referidos[referidoEstadoIndex].fecha = fecha;
+  referidos[referidoEstadoIndex].hora = hora;
+  const referido = referidos[referidoEstadoIndex];
+
+const inicio =
+  fecha.replaceAll("-", "") +
+  "T" +
+  hora.replace(":", "") +
+  "00";
+
+const titulo =
+  nuevoEstado + " - " + referido.nombre;
+
+const detalles =
+  "Teléfono: " + (referido.telefono || "") +
+  "\nRelación: " + (referido.relacion || "");
+
+const urlCalendar =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  "&text=" + encodeURIComponent(titulo) +
+  "&dates=" + inicio + "/" + inicio +
+  "&details=" + encodeURIComponent(detalles);
+
+window.open(urlCalendar, "_blank");
+}
+  
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
   localStorage.setItem(
