@@ -442,60 +442,40 @@ function cambiarEstado(index) {
 async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
 if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
+  const fecha = await new Promise((resolve) => {
   const selectorFecha = document.createElement("input");
-selectorFecha.type = "date";
-selectorFecha.style.position = "fixed";
-selectorFecha.style.top = "50%";
-selectorFecha.style.left = "50%";
-selectorFecha.style.transform = "translate(-50%, -50%)";
-selectorFecha.style.zIndex = "99999";
+  selectorFecha.type = "date";
 
-document.body.appendChild(selectorFecha);
+  selectorFecha.style.position = "fixed";
+  selectorFecha.style.top = "50%";
+  selectorFecha.style.left = "50%";
+  selectorFecha.style.transform = "translate(-50%, -50%)";
+  selectorFecha.style.zIndex = "99999";
 
-selectorFecha.showPicker();
+  document.body.appendChild(selectorFecha);
 
-const fecha = await new Promise((resolve) => {
   selectorFecha.addEventListener("change", () => {
     const valor = selectorFecha.value;
     selectorFecha.remove();
     resolve(valor);
   });
 
-  selectorFecha.addEventListener("cancel", () => {
-    selectorFecha.remove();
-    resolve("");
-  });
+  selectorFecha.showPicker();
 });
 
 if (!fecha) return;
 
-  const selectorHora =
-  document.createElement("input");
+const hora = prompt(
+  "Escribe la hora de la cita en formato 24 horas.\nEjemplo: 18:30",
+  "18:00"
+);
 
-selectorHora.type = "time";
-selectorHora.style.position = "fixed";
-selectorHora.style.top = "50%";
-selectorHora.style.left = "50%";
-selectorHora.style.transform =
-  "translate(-50%, -50%)";
-selectorHora.style.zIndex = "99999";
-selectorHora.style.width = "260px";
-selectorHora.style.height = "70px";
-selectorHora.style.fontSize = "24px";
-selectorHora.style.padding = "10px";
-selectorHora.style.background = "white";
-selectorHora.style.border = "3px solid #0b2d55";
-selectorHora.style.borderRadius = "15px";
+if (!hora) return;
 
-document.body.appendChild(selectorHora);
-
-const hora = await new Promise((resolve) => {
-  selectorHora.addEventListener("change", () => {
-    const valor = selectorHora.value;
-    selectorHora.remove();
-    resolve(valor);
-  });
-});
+if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(hora)) {
+  alert("Hora no válida. Usa el formato HH:MM. Ejemplo: 18:30");
+  return;
+}
 
   referidos[referidoEstadoIndex].fecha = fecha;
   referidos[referidoEstadoIndex].hora = hora;
