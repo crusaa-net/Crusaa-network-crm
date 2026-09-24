@@ -442,8 +442,32 @@ function cambiarEstado(index) {
 async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
 if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
-  const fecha = prompt("Fecha (AAAA-MM-DD):");
-  if (!fecha) return;
+  const selectorFecha = document.createElement("input");
+selectorFecha.type = "date";
+selectorFecha.style.position = "fixed";
+selectorFecha.style.top = "50%";
+selectorFecha.style.left = "50%";
+selectorFecha.style.transform = "translate(-50%, -50%)";
+selectorFecha.style.zIndex = "99999";
+
+document.body.appendChild(selectorFecha);
+
+selectorFecha.showPicker();
+
+const fecha = await new Promise((resolve) => {
+  selectorFecha.addEventListener("change", () => {
+    const valor = selectorFecha.value;
+    selectorFecha.remove();
+    resolve(valor);
+  });
+
+  selectorFecha.addEventListener("cancel", () => {
+    selectorFecha.remove();
+    resolve("");
+  });
+});
+
+if (!fecha) return;
 
   const hora = prompt("Hora (HH:MM, ejemplo 14:30):");
   if (!hora) return;
