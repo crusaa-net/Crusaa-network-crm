@@ -469,17 +469,25 @@ const fecha = await new Promise((resolve) => {
 
 if (!fecha) return;
 
-  const selectorHora = document.createElement("input");
+  const selectorHora =
+  document.createElement("input");
+
 selectorHora.type = "time";
 selectorHora.style.position = "fixed";
 selectorHora.style.top = "50%";
 selectorHora.style.left = "50%";
-selectorHora.style.transform = "translate(-50%, -50%)";
+selectorHora.style.transform =
+  "translate(-50%, -50%)";
 selectorHora.style.zIndex = "99999";
+selectorHora.style.width = "260px";
+selectorHora.style.height = "70px";
+selectorHora.style.fontSize = "24px";
+selectorHora.style.padding = "10px";
+selectorHora.style.background = "white";
+selectorHora.style.border = "3px solid #0b2d55";
+selectorHora.style.borderRadius = "15px";
 
 document.body.appendChild(selectorHora);
-
-selectorHora.click();
 
 const hora = await new Promise((resolve) => {
   selectorHora.addEventListener("change", () => {
@@ -487,14 +495,7 @@ const hora = await new Promise((resolve) => {
     selectorHora.remove();
     resolve(valor);
   });
-
-  selectorHora.addEventListener("cancel", () => {
-    selectorHora.remove();
-    resolve("");
-  });
 });
-
-if (!hora) return;
 
   referidos[referidoEstadoIndex].fecha = fecha;
   referidos[referidoEstadoIndex].hora = hora;
