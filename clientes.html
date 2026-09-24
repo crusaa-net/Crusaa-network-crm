@@ -371,7 +371,7 @@ tarjeta.appendChild(detalles);
 
     });
   }
-function editarCliente(index) {
+async function editarCliente(index) {
 
   const cliente = clientes[index];
 const nombreAnterior = cliente.nombre;
@@ -390,14 +390,31 @@ const direccion = prompt(
 if (direccion === null) return;
   const notas = prompt("Notas:", cliente.notas);
   if (notas === null) return;
+let fotoNueva = cliente.foto || "";
 
+const cambiarFoto = confirm(
+  "¿Quieres cambiar la foto del cliente?"
+);
+
+if (cambiarFoto) {
+  const archivoFoto =
+    document.getElementById("foto").files[0];
+
+  if (archivoFoto) {
+    fotoNueva =
+      await convertirFotoBase64(archivoFoto);
+  } else {
+    alert("Primero selecciona una foto en el formulario.");
+    return;
+  }
+}
   clientes[index] = {
     nombre: nombre,
     telefono: telefono,
     email: correo,
     direccion: direccion,
     notas: notas,
-    foto: cliente.foto || ""
+    foto: fotoNueva
   };
 
   localStorage.setItem("clientesCRUSAA", JSON.stringify(clientes));
