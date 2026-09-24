@@ -478,7 +478,7 @@ const detalles =
 const urlCalendar =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
   "&text=" + encodeURIComponent(titulo) +
-  "&dates=" + inicio + "/" + fin +
+  "&dates=" + encodeURIComponent(inicio + "/" + fin) +
   "&details=" + encodeURIComponent(detalles);
 
 window.open(urlCalendar, "_blank");
