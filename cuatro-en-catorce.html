@@ -469,8 +469,32 @@ const fecha = await new Promise((resolve) => {
 
 if (!fecha) return;
 
-  const hora = prompt("Hora (HH:MM, ejemplo 14:30):");
-  if (!hora) return;
+  const selectorHora = document.createElement("input");
+selectorHora.type = "time";
+selectorHora.style.position = "fixed";
+selectorHora.style.top = "50%";
+selectorHora.style.left = "50%";
+selectorHora.style.transform = "translate(-50%, -50%)";
+selectorHora.style.zIndex = "99999";
+
+document.body.appendChild(selectorHora);
+
+selectorHora.showPicker();
+
+const hora = await new Promise((resolve) => {
+  selectorHora.addEventListener("change", () => {
+    const valor = selectorHora.value;
+    selectorHora.remove();
+    resolve(valor);
+  });
+
+  selectorHora.addEventListener("cancel", () => {
+    selectorHora.remove();
+    resolve("");
+  });
+});
+
+if (!hora) return;
 
   referidos[referidoEstadoIndex].fecha = fecha;
   referidos[referidoEstadoIndex].hora = hora;
