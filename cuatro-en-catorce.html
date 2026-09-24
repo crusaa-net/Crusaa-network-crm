@@ -457,12 +457,16 @@ selectorFecha.style.height = "1px";
 selectorFecha.style.pointerEvents = "none";
   document.body.appendChild(selectorFecha);
 
-  selectorFecha.addEventListener("change", () => {
-    const valor = selectorFecha.value;
-    selectorFecha.remove();
-    resolve(valor);
-  });
+  selectorFecha.addEventListener("input", () => {
+  const valor = selectorFecha.value;
 
+  if (valor) {
+    setTimeout(() => {
+      selectorFecha.remove();
+      resolve(valor);
+    }, 300);
+  }
+}, { once: true });
   selectorFecha.showPicker();
 });
 
