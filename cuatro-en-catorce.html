@@ -457,7 +457,7 @@ selectorFecha.style.height = "1px";
   selectorFecha.addEventListener("change", function () {
     const valor = selectorFecha.value;
     selectorFecha.remove();
-    resolve(valor);
+    setTimeout(() => resolve(valor), 300);
   });
 
  if (selectorFecha.showPicker) {
