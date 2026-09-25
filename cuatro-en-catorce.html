@@ -447,10 +447,10 @@ if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
   selectorFecha.type = "date";
 
   selectorFecha.style.position = "fixed";
-  selectorFecha.style.top = "50%";
-  selectorFecha.style.left = "50%";
-    selectorFecha.style.transform = "translate(-50%, -50%)";
-  selectorFecha.style.zIndex = "999999";
+selectorFecha.style.opacity = "0";
+selectorFecha.style.pointerEvents = "none";
+selectorFecha.style.width = "1px";
+selectorFecha.style.height = "1px";
 
   document.body.appendChild(selectorFecha);
 
