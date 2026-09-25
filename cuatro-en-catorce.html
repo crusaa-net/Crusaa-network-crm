@@ -487,7 +487,11 @@ const hora = await new Promise((resolve) => {
     resolve(valor);
   });
 
+  if (selectorHora.showPicker) {
+  selectorHora.showPicker();
+} else {
   selectorHora.click();
+}
 });
 
 if (!hora) return;
