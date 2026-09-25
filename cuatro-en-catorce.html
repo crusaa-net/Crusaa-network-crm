@@ -558,7 +558,11 @@ function cerrarModalEstado() {
 
   mostrarReferidos();
               }
-mostrarReferidos();
+const pruebaReferidos =
+  JSON.parse(localStorage.getItem("referidos4en14")) || [];
+
+alert("Referidos guardados: " + pruebaReferidos.length);
+              mostrarReferidos();
 
 </script>
 </div>
