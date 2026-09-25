@@ -468,37 +468,12 @@ selectorFecha.style.height = "1px";
 });
 
 if (!fecha) return;
+const hora24 = prompt(
+  "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
+  "18:00"
+);
 
-const hora = await new Promise((resolve) => {
-  const selectorHora = document.createElement("input");
-  selectorHora.type = "time";
-  selectorHora.value = "18:00";
-
-  selectorHora.style.position = "fixed";
-  selectorHora.style.opacity = "0";
-  selectorHora.style.pointerEvents = "none";
-  selectorHora.style.width = "1px";
-  selectorHora.style.height = "1px";
-
-  document.body.appendChild(selectorHora);
-
-  selectorHora.addEventListener("change", function () {
-    const valor = selectorHora.value;
-    selectorHora.remove();
-    setTimeout(() => resolve(valor), 300);
-  });
-
-  if (selectorHora.showPicker) {
-    selectorHora.showPicker();
-  } else {
-    selectorHora.click();
-  }
-});
-
-if (!hora) return;
-
-const hora24 = hora;
-
+if (!hora24) return;
 
   referidos[referidoEstadoIndex].fecha = fecha;
   referidos[referidoEstadoIndex].hora = hora24;
