@@ -469,38 +469,35 @@ selectorFecha.style.height = "1px";
 
 if (!fecha) return;
 
-const hora = prompt(
-  "Escribe la hora de la cita.\nEjemplo: 6:30 PM",
-  "6:00 PM"
-);
+const hora = await new Promise((resolve) => {
+  const selectorHora = document.createElement("input");
+  selectorHora.type = "time";
+  selectorHora.value = "18:00";
+
+  selectorHora.style.position = "fixed";
+  selectorHora.style.opacity = "0";
+  selectorHora.style.pointerEvents = "none";
+  selectorHora.style.width = "1px";
+  selectorHora.style.height = "1px";
+
+  document.body.appendChild(selectorHora);
+
+  selectorHora.addEventListener("change", function () {
+    const valor = selectorHora.value;
+    selectorHora.remove();
+    setTimeout(() => resolve(valor), 300);
+  });
+
+  if (selectorHora.showPicker) {
+    selectorHora.showPicker();
+  } else {
+    selectorHora.click();
+  }
+});
 
 if (!hora) return;
 
-const hora12 = hora.trim().toUpperCase();
-const partesHora = hora12.match(
-  /^(\d{1,2}):(\d{2})\s*(AM|PM)$/
-);
-
-if (!partesHora) {
-  alert("Usa el formato 6:30 PM o 10:00 AM");
-  return;
-}
-
-let horas = parseInt(partesHora[1]);
-const minutos = partesHora[2];
-const periodo = partesHora[3];
-
-if (horas < 1 || horas > 12) {
-  alert("La hora debe estar entre 1 y 12.");
-  return;
-}
-
-if (periodo === "PM" && horas !== 12) horas += 12;
-if (periodo === "AM" && horas === 12) horas = 0;
-
-const hora24 =
-  String(horas).padStart(2, "0") + ":" + minutos;
-
+const hora24 = hora;
 
 
   referidos[referidoEstadoIndex].fecha = fecha;
