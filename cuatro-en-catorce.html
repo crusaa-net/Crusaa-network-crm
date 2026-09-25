@@ -460,7 +460,11 @@ if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
     resolve(valor);
   });
 
+ if (selectorFecha.showPicker) {
+  selectorFecha.showPicker();
+} else {
   selectorFecha.click();
+ } 
 });
 
 if (!fecha) return;
