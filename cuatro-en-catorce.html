@@ -442,31 +442,9 @@ function cambiarEstado(index) {
 async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
 if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
-  const fecha = await new Promise((resolve) => {
-  const selectorFecha = document.createElement("input");
-  selectorFecha.type = "date";
-
-  selectorFecha.style.position = "fixed";
-selectorFecha.style.opacity = "0";
-selectorFecha.style.pointerEvents = "none";
-selectorFecha.style.width = "1px";
-selectorFecha.style.height = "1px";
-
-  document.body.appendChild(selectorFecha);
-
-  selectorFecha.addEventListener("change", function () {
-    const valor = selectorFecha.value;
-    selectorFecha.remove();
-    setTimeout(() => resolve(valor), 300);
-  });
-
- if (selectorFecha.showPicker) {
-  selectorFecha.showPicker();
-} else {
-  selectorFecha.click();
- } 
-});
-
+  const fecha = prompt(
+  "Escribe la fecha de la cita.\nFormato: AAAA-MM-DD\nEjemplo: 2026-09-25"
+);
 if (!fecha) return;
 const hora24 = prompt(
   "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
