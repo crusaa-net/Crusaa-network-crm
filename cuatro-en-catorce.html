@@ -443,9 +443,22 @@ async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
 if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
   const fecha = prompt(
-  "Escribe la fecha de la cita.\nFormato: AAAA-MM-DD\nEjemplo: 2026-09-25"
-);
+  "Escribe la fecha.\nEjemplo: 09-25-2026"
+
 if (!fecha) return;
+
+const partesFecha = fecha.split("-");
+if (partesFecha.length !== 3) {
+  alert("Usa el formato MM-DD-AAAA");
+  return;
+}
+
+const fechaISO =
+  partesFecha[2] + "-" +
+  partesFecha[0].padStart(2, "0") + "-" +
+  partesFecha[1].padStart(2, "0");
+
+const fechaOriginal = fecha;
 const hora24 = prompt(
   "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
   "18:00"
@@ -458,11 +471,11 @@ if (!hora24) return;
   const referido = referidos[referidoEstadoIndex];
 
 const inicio =
-  fecha.replaceAll("-", "") +
+  fechaISO.replaceAll("-", "") +
   "T" +
   hora24.replace(":", "") +
   "00";
-const fechaInicio = new Date(fecha + "T" + hora24);
+const fechaInicio = new Date(fechaISO + "T" + hora24);
 fechaInicio.setHours(fechaInicio.getHours() + 1);
 
 const fin =
