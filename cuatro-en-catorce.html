@@ -442,28 +442,51 @@ function cambiarEstado(index) {
 async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
 if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
-  const fecha = prompt(
-  "Escribe la fecha de la cita.\nFormato: AAAA-MM-DD\nEjemplo: 2026-09-24"
-);
+  const fecha = await new Promise((resolve) => {
+  const selectorFecha = document.createElement("input");
+  selectorFecha.type = "date";
+
+  selectorFecha.style.position = "fixed";
+  selectorFecha.style.top = "50%";
+  selectorFecha.style.left = "50%";
+    selectorFecha.style.transform = "translate(-50%, -50%)";
+  selectorFecha.style.zIndex = "999999";
+
+  document.body.appendChild(selectorFecha);
+
+  selectorFecha.addEventListener("change", function () {
+    const valor = selectorFecha.value;
+    selectorFecha.remove();
+    resolve(valor);
+  });
+
+  selectorFecha.click();
+});
 
 if (!fecha) return;
 
-if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
-  alert("Fecha no válida. Usa el formato AAAA-MM-DD.");
-  return;
-}
+const hora = await new Promise((resolve) => {
+  const selectorHora = document.createElement("input");
+  selectorHora.type = "time";
 
-const hora = prompt(
-  "Escribe la hora de la cita en formato 24 horas.\nEjemplo: 18:30",
-  "18:00"
-);
+  selectorHora.style.position = "fixed";
+  selectorHora.style.top = "50%";
+  selectorHora.style.left = "50%";
+  selectorHora.style.transform = "translate(-50%, -50%)";
+  selectorHora.style.zIndex = "999999";
+
+  document.body.appendChild(selectorHora);
+
+  selectorHora.addEventListener("change", function () {
+    const valor = selectorHora.value;
+    selectorHora.remove();
+    resolve(valor);
+  });
+
+  selectorHora.click();
+});
 
 if (!hora) return;
-
-if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(hora)) {
-  alert("Hora no válida. Usa el formato HH:MM. Ejemplo: 18:30");
-  return;
-}
 
   referidos[referidoEstadoIndex].fecha = fecha;
   referidos[referidoEstadoIndex].hora = hora;
