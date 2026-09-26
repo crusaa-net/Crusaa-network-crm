@@ -281,7 +281,13 @@
           tarjeta.appendChild(fecha);
         }
 
+tarjeta.onclick = function () {
+  window.location.href =
+    "referido.html?telefono=" +
+    encodeURIComponent(referido.telefono);
+};
 
+tarjeta.style.cursor = "pointer";
         lista.appendChild(tarjeta);
 
       });
