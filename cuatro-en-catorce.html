@@ -450,12 +450,37 @@ function seleccionarEstado(nuevoEstado) {
 
     if (!fecha) return;
 
-    const hora = prompt(
-      "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
-      "18:00"
-    );
+  const hora12 = prompt(
+  "Escribe la hora.\nEjemplo: 6:30",
+  "6:00"
+);
 
-    if (!hora) return;
+if (!hora12) return;
+
+const periodo = prompt(
+  "Escribe AM o PM",
+  "PM"
+);
+
+if (!periodo) return;
+
+let partesHora = hora12.split(":");
+let horas = Number(partesHora[0]);
+let minutos = partesHora[1] || "00";
+let ampm = periodo.trim().toUpperCase();
+
+if (ampm === "PM" && horas < 12) {
+  horas += 12;
+}
+
+if (ampm === "AM" && horas === 12) {
+  horas = 0;
+}
+
+const hora =
+  String(horas).padStart(2, "0") +
+  ":" +
+  minutos.padStart(2, "0");  
 
     referidos[referidoEstadoIndex].fecha = fecha;
     referidos[referidoEstadoIndex].hora = hora;
@@ -471,14 +496,29 @@ const inicio =
   "T" +
   hora.replace(":", "") +
   "00";
+const fechaFin = new Date(
+  fecha.slice(6, 10),
+  Number(fecha.slice(0, 2)) - 1,
+  fecha.slice(3, 5),
+  Number(hora.split(":")[0]) + 2,
+  Number(hora.split(":")[1])
+);
 
+const fin =
+  fechaFin.getFullYear().toString() +
+  String(fechaFin.getMonth() + 1).padStart(2, "0") +
+  String(fechaFin.getDate()).padStart(2, "0") +
+  "T" +
+  String(fechaFin.getHours()).padStart(2, "0") +
+  String(fechaFin.getMinutes()).padStart(2, "0") +
+  "00";
 const urlCalendar =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
   "&text=" + encodeURIComponent(
     nuevoEstado + " - " +
     referidos[referidoEstadoIndex].nombre
   ) +
-  "&dates=" + inicio + "/" + inicio;
+  "&dates=" + inicio + "/" + fin;
 
 window.open(urlCalendar, "_blank");
   }
