@@ -460,7 +460,7 @@ function seleccionarEstado(nuevoEstado) {
 
   document.body.appendChild(selectorFecha);
 
-  selectorFecha.showPicker();
+  
  selectorFecha.onchange = function () {
   const fecha = selectorFecha.value;
 
@@ -474,7 +474,8 @@ function seleccionarEstado(nuevoEstado) {
   );
 
   selectorFecha.remove();
-};   
+}; 
+ selectorFecha.showPicker();   
 }
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
