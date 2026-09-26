@@ -76,6 +76,105 @@
   </div>
 
   <script>
+    const telefonoReferido =
+  new URLSearchParams(window.location.search).get("telefono");
+
+let referidos =
+  JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
+
+let referido = referidos.find(
+  r => r.telefono === telefonoReferido
+);
+
+const ficha =
+  document.getElementById("fichaReferido");
+
+if (!referido) {
+  ficha.innerHTML =
+    "<p>No se encontró el referido.</p>";
+} else {
+
+  ficha.innerHTML =
+    '<div class="dato">' +
+      '<div class="etiqueta">Nombre</div>' +
+      '<div class="valor">' +
+        (referido.nombre || "") + " " +
+        (referido.apellido || "") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Teléfono</div>' +
+      '<div class="valor">' +
+        (referido.telefono || "") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Correo electrónico</div>' +
+      '<div class="valor">' +
+        (referido.email || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Dirección</div>' +
+      '<div class="valor">' +
+        (referido.direccion || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Ciudad</div>' +
+      '<div class="valor">' +
+        (referido.ciudad || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Estado</div>' +
+      '<div class="valor">' +
+        (referido.estado || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Código postal</div>' +
+      '<div class="valor">' +
+        (referido.codigoPostal || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Relación</div>' +
+      '<div class="valor">' +
+        (referido.relacion || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Mejor horario para llamar</div>' +
+      '<div class="valor">' +
+        (referido.horario || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Comentarios</div>' +
+      '<div class="valor">' +
+        (referido.comentarios || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="dato">' +
+      '<div class="etiqueta">Referido por</div>' +
+      '<div class="valor">' +
+        (referido.clienteOrigen || "Sin información") +
+      '</div>' +
+    '</div>' +
+
+    '<button onclick="editarReferido()">✏️ Editar referido</button>';
+}
   </script>
 
 </body>
