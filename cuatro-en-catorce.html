@@ -441,43 +441,26 @@ function cambiarEstado(index) {
 
 function seleccionarEstado(nuevoEstado) {
   if (
-  nuevoEstado === "Cita" ||
-  nuevoEstado === "Demostración"
-) {
-  const selectorFecha = document.createElement("input");
-selectorFecha.type = "date";
+    nuevoEstado === "Cita" ||
+    nuevoEstado === "Demostración"
+  ) {
+    const fecha = prompt(
+      "Escribe la fecha en formato MM-DD-AAAA.\nEjemplo: 09-27-2026"
+    );
 
-selectorFecha.style.position = "fixed";
-selectorFecha.style.opacity = "0";
-selectorFecha.style.pointerEvents = "none";
+    if (!fecha) return;
 
-document.body.appendChild(selectorFecha);
+    const hora = prompt(
+      "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
+      "18:00"
+    );
 
-selectorFecha.addEventListener("change", function () {
-  const fecha = selectorFecha.value;
+    if (!hora) return;
 
-  if (!fecha) {
-    selectorFecha.remove();
-    return;
+    referidos[referidoEstadoIndex].fecha = fecha;
+    referidos[referidoEstadoIndex].hora = hora;
   }
 
-  referidos[referidoEstadoIndex].fecha = fecha;
-const hora = prompt(
-  "Escribe la hora de la cita.\nEjemplo: 18:30",
-  "18:00"
-);
-
-if (!hora) {
-  selectorFecha.remove();
-  return;
-}
-
-referidos[referidoEstadoIndex].hora = hora;
-  selectorFecha.remove();
-});
-
-selectorFecha.showPicker();   
-}
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
   localStorage.setItem(
@@ -488,7 +471,6 @@ selectorFecha.showPicker();
   cerrarModalEstado();
   mostrarReferidos();
 }
-
 function cerrarModalEstado() {
   document.getElementById("modalEstado").style.display = "none";
   referidoEstadoIndex = null;
