@@ -461,6 +461,20 @@ function seleccionarEstado(nuevoEstado) {
   document.body.appendChild(selectorFecha);
 
   selectorFecha.showPicker();
+ selectorFecha.onchange = function () {
+  const fecha = selectorFecha.value;
+
+  if (!fecha) return;
+
+  referidos[referidoEstadoIndex].fecha = fecha;
+
+  localStorage.setItem(
+    "referidos4en14",
+    JSON.stringify(referidos)
+  );
+
+  selectorFecha.remove();
+};   
 }
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
