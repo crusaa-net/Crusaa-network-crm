@@ -444,38 +444,29 @@ function seleccionarEstado(nuevoEstado) {
   nuevoEstado === "Cita" ||
   nuevoEstado === "Demostración"
 ) {
-  const selectorFecha =
-    document.createElement("input");
+  const selectorFecha = document.createElement("input");
+selectorFecha.type = "date";
 
-  selectorFecha.type = "date";
+selectorFecha.style.position = "fixed";
+selectorFecha.style.opacity = "0";
+selectorFecha.style.pointerEvents = "none";
 
-  selectorFecha.style.position = "fixed";
-  selectorFecha.style.left = "50%";
-  selectorFecha.style.top = "50%";
-  selectorFecha.style.transform =
-    "translate(-50%, -50%)";
-  selectorFecha.style.fontSize = "22px";
-  selectorFecha.style.padding = "15px";
-  selectorFecha.style.zIndex = "9999";
+document.body.appendChild(selectorFecha);
 
-  document.body.appendChild(selectorFecha);
-
-  
- selectorFecha.onchange = function () {
+selectorFecha.addEventListener("change", function () {
   const fecha = selectorFecha.value;
 
-  if (!fecha) return;
+  if (!fecha) {
+    selectorFecha.remove();
+    return;
+  }
 
   referidos[referidoEstadoIndex].fecha = fecha;
 
-  localStorage.setItem(
-    "referidos4en14",
-    JSON.stringify(referidos)
-  );
-
   selectorFecha.remove();
-}; 
- selectorFecha.showPicker();   
+});
+
+selectorFecha.showPicker();   
 }
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
