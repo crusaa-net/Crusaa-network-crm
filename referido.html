@@ -76,9 +76,8 @@
   </div>
 
   <script>
-    const telefonoReferido =
-  new URLSearchParams(window.location.search).get("telefono");
-
+   const telefonoReferido =
+  localStorage.getItem("referidoActual"); 
 let referidos =
   JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
 
