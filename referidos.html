@@ -330,7 +330,9 @@ const delCliente = referidos.filter(referido => {
 
   delCliente.forEach((referido, index) => {
   contenedor.innerHTML +=
-    '<div class="tarjetaReferido">' +
+    '<div class="tarjetaReferido" onclick="abrirFichaReferido(\'' +
+referido.telefono +
+'\')">' +
     '<strong>👤 ' + referido.nombre + ' ' +
     referido.apellido + '</strong><br>' +
 '📞 ' + referido.telefono + '<br>' +
@@ -398,6 +400,14 @@ referido.email = email;
   );
 
   mostrarReferidosDelCliente();
+  }
+  function abrirFichaReferido(telefono) {
+  localStorage.setItem(
+    "referidoActual",
+    telefono
+  );
+
+  window.location.href = "referido.html";
   }
   function abrirNuevoReferido() {
   document.getElementById("menuReferidos").style.display = "none";
