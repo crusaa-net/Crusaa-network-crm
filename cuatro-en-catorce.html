@@ -462,7 +462,29 @@ selectorFecha.addEventListener("change", function () {
   }
 
   referidos[referidoEstadoIndex].fecha = fecha;
+const selectorHora = document.createElement("input");
+selectorHora.type = "time";
 
+selectorHora.style.position = "fixed";
+selectorHora.style.opacity = "0";
+selectorHora.style.pointerEvents = "none";
+
+document.body.appendChild(selectorHora);
+
+selectorHora.addEventListener("change", function () {
+  const hora = selectorHora.value;
+
+  if (!hora) {
+    selectorHora.remove();
+    return;
+  }
+
+  referidos[referidoEstadoIndex].hora = hora;
+
+  selectorHora.remove();
+});
+
+selectorHora.showPicker();
   selectorFecha.remove();
 });
 
