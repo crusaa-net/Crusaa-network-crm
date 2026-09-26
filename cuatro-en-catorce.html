@@ -459,6 +459,28 @@ function seleccionarEstado(nuevoEstado) {
 
     referidos[referidoEstadoIndex].fecha = fecha;
     referidos[referidoEstadoIndex].hora = hora;
+  const partesFecha = fecha.split("-");
+
+const fechaISO =
+  partesFecha[2] +
+  partesFecha[0].padStart(2, "0") +
+  partesFecha[1].padStart(2, "0");
+
+const inicio =
+  fechaISO +
+  "T" +
+  hora.replace(":", "") +
+  "00";
+
+const urlCalendar =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  "&text=" + encodeURIComponent(
+    nuevoEstado + " - " +
+    referidos[referidoEstadoIndex].nombre
+  ) +
+  "&dates=" + inicio + "/" + inicio;
+
+window.open(urlCalendar, "_blank");
   }
 
   referidos[referidoEstadoIndex].estado = nuevoEstado;
