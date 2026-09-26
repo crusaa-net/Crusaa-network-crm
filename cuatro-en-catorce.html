@@ -442,64 +442,78 @@ function cambiarEstado(index) {
 async function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
 if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
-  const fecha = prompt(
-  "Escribe la fecha.\nEjemplo: 09-25-2026"
-
-if (!fecha) return;
-
-const partesFecha = fecha.split("-");
-if (partesFecha.length !== 3) {
-  alert("Usa el formato MM-DD-AAAA");
-  return;
-}
-
-const fechaISO =
-  partesFecha[2] + "-" +
-  partesFecha[0].padStart(2, "0") + "-" +
-  partesFecha[1].padStart(2, "0");
-
-const fechaOriginal = fecha;
-const hora24 = prompt(
-  "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
-  "18:00"
-);
-
-if (!hora24) return;
-
-  referidos[referidoEstadoIndex].fecha = fecha;
-  referidos[referidoEstadoIndex].hora = hora24;
   const referido = referidos[referidoEstadoIndex];
 
-const inicio =
-  fechaISO.replaceAll("-", "") +
-  "T" +
-  hora24.replace(":", "") +
-  "00";
-const fechaInicio = new Date(fechaISO + "T" + hora24);
-fechaInicio.setHours(fechaInicio.getHours() + 1);
+  const selectorFecha = document.createElement("input");
+  selectorFecha.type = "date";
+  selectorFecha.style.position = "fixed";
+  selectorFecha.style.left = "50%";
+  selectorFecha.style.top = "50%";
+  selectorFecha.style.transform = "translate(-50%, -50%)";
+  selectorFecha.style.zIndex = "9999";
 
-const fin =
-  fechaInicio.getFullYear().toString() +
-  String(fechaInicio.getMonth() + 1).padStart(2, "0") +
-  String(fechaInicio.getDate()).padStart(2, "0") +
-  "T" +
-  String(fechaInicio.getHours()).padStart(2, "0") +
-  String(fechaInicio.getMinutes()).padStart(2, "0") +
-  "00";
-const titulo =
-  nuevoEstado + " - " + referido.nombre;
+  document.body.appendChild(selectorFecha);
 
-const detalles =
-  "Teléfono: " + (referido.telefono || "") +
-  "\nRelación: " + (referido.relacion || "");
+  selectorFecha.onchange = function () {
+    const fecha = selectorFecha.value;
+    selectorFecha.remove();
 
-const urlCalendar =
-  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-  "&text=" + encodeURIComponent(titulo) +
-  "&dates=" + encodeURIComponent(inicio + "/" + fin) +
-  "&details=" + encodeURIComponent(detalles);
+    if (!fecha) return;
 
-window.open(urlCalendar, "_blank");
+    const selectorHora = document.createElement("input");
+    selectorHora.type = "time";
+    selectorHora.style.position = "fixed";
+    selectorHora.style.left = "50%";
+    selectorHora.style.top = "50%";
+    selectorHora.style.transform = "translate(-50%, -50%)";
+    selectorHora.style.zIndex = "9999";
+
+    document.body.appendChild(selectorHora);
+
+    selectorHora.onchange = function () {
+      const hora = selectorHora.value;
+      selectorHora.remove();
+
+      if (!hora) return;
+
+      referido.fecha = fecha;
+      referido.hora = hora;
+
+      const inicioFecha = new Date(fecha + "T" + hora);
+      const finFecha = new Date(inicioFecha.getTime() + 60 * 60 * 1000);
+
+      function formatoCalendar(fechaObj) {
+        return fechaObj.getFullYear().toString() +
+          String(fechaObj.getMonth() + 1).padStart(2, "0") +
+          String(fechaObj.getDate()).padStart(2, "0") +
+          "T" +
+          String(fechaObj.getHours()).padStart(2, "0") +
+          String(fechaObj.getMinutes()).padStart(2, "0") +
+          "00";
+      }
+
+      const inicio = formatoCalendar(inicioFecha);
+      const fin = formatoCalendar(finFecha);
+
+      const titulo = nuevoEstado + " - " + referido.nombre;
+
+      const detalles =
+        "Teléfono: " + (referido.telefono || "") +
+        "\nRelación: " + (referido.relacion || "");
+
+      const urlCalendar =
+        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent(titulo) +
+        "&dates=" + encodeURIComponent(inicio + "/" + fin) +
+        "&details=" + encodeURIComponent(detalles);
+
+      window.open(urlCalendar, "_blank");
+    };
+
+    selectorHora.showPicker();
+  };
+
+  selectorFecha.showPicker();
 }
   
   referidos[referidoEstadoIndex].estado = nuevoEstado;
