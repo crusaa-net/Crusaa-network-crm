@@ -152,7 +152,9 @@ button {
     </div>
       
   </div>
-  <div id="referidosDelCliente"></div>
+  <input type="text" id="buscarReferido" placeholder="🔎 Buscar referido...">
+
+<div id="referidosDelCliente"></div>
 <script>
   const campoReferidoPor =
   document.getElementById("referidoPor");
@@ -300,10 +302,23 @@ clienteOrigen:
     localStorage.getItem("referidosCRUSAA")
   ) || [];
 
-  const delCliente = referidos.filter(
-    referido => referido.clienteOrigen === clienteActual.nombre
-  );
+  const busqueda =
+  document.getElementById("buscarReferido")
+    .value.trim().toLowerCase();
 
+const delCliente = referidos.filter(referido => {
+  const esDelCliente =
+    referido.clienteOrigen === clienteActual.nombre;
+
+  const coincideBusqueda =
+    !busqueda ||
+    (referido.nombre || "").toLowerCase().includes(busqueda) ||
+    (referido.apellido || "").toLowerCase().includes(busqueda) ||
+    (referido.telefono || "").toLowerCase().includes(busqueda) ||
+    (referido.email || "").toLowerCase().includes(busqueda);
+
+  return esDelCliente && coincideBusqueda;
+});
   contenedor.innerHTML =
     "<h2>👥 Referidos de " + clienteActual.nombre + "</h2>";
 
@@ -345,6 +360,11 @@ function eliminarReferido(telefono) {
 
   mostrarReferidosDelCliente();
 }
+  document
+  .getElementById("buscarReferido")
+  .addEventListener("input", function () {
+    mostrarReferidosDelCliente();
+  });
   function editarReferido(telefonoOriginal) {
   let referidos =
     JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
