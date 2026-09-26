@@ -440,8 +440,28 @@ function cambiarEstado(index) {
 }
 
 function seleccionarEstado(nuevoEstado) {
-  if (referidoEstadoIndex === null) return;
+  if (
+  nuevoEstado === "Cita" ||
+  nuevoEstado === "Demostración"
+) {
+  const selectorFecha =
+    document.createElement("input");
 
+  selectorFecha.type = "date";
+
+  selectorFecha.style.position = "fixed";
+  selectorFecha.style.left = "50%";
+  selectorFecha.style.top = "50%";
+  selectorFecha.style.transform =
+    "translate(-50%, -50%)";
+  selectorFecha.style.fontSize = "22px";
+  selectorFecha.style.padding = "15px";
+  selectorFecha.style.zIndex = "9999";
+
+  document.body.appendChild(selectorFecha);
+
+  selectorFecha.showPicker();
+}
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
   localStorage.setItem(
