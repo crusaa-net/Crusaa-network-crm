@@ -175,6 +175,68 @@ if (!referido) {
 
     '<button onclick="editarReferido()">✏️ Editar referido</button>';
 }
+    function editarReferido() {
+  const nombre = prompt("Nombre:", referido.nombre || "");
+  if (nombre === null) return;
+
+  const apellido = prompt("Apellido:", referido.apellido || "");
+  if (apellido === null) return;
+
+  const telefono = prompt("Teléfono:", referido.telefono || "");
+  if (telefono === null) return;
+
+  const email = prompt("Correo electrónico:", referido.email || "");
+  if (email === null) return;
+
+  const direccion = prompt("Dirección:", referido.direccion || "");
+  if (direccion === null) return;
+
+  const ciudad = prompt("Ciudad:", referido.ciudad || "");
+  if (ciudad === null) return;
+
+  const estado = prompt("Estado:", referido.estado || "");
+  if (estado === null) return;
+
+  const codigoPostal = prompt(
+    "Código postal:",
+    referido.codigoPostal || ""
+  );
+  if (codigoPostal === null) return;
+
+  const relacion = prompt("Relación:", referido.relacion || "");
+  if (relacion === null) return;
+
+  const horario = prompt(
+    "Mejor horario:",
+    referido.horario || ""
+  );
+  if (horario === null) return;
+
+  const comentarios = prompt(
+    "Comentarios:",
+    referido.comentarios || ""
+  );
+  if (comentarios === null) return;
+
+  referido.nombre = nombre.trim();
+  referido.apellido = apellido.trim();
+  referido.telefono = telefono.trim();
+  referido.email = email.trim();
+  referido.direccion = direccion.trim();
+  referido.ciudad = ciudad.trim();
+  referido.estado = estado.trim();
+  referido.codigoPostal = codigoPostal.trim();
+  referido.relacion = relacion.trim();
+  referido.horario = horario.trim();
+  referido.comentarios = comentarios.trim();
+
+  localStorage.setItem(
+    "referidosCRUSAA",
+    JSON.stringify(referidos)
+  );
+
+  location.reload();
+    }
   </script>
 
 </body>
