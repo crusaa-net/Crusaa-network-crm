@@ -439,74 +439,9 @@ function cambiarEstado(index) {
   document.getElementById("modalEstado").style.display = "flex";
 }
 
-async function seleccionarEstado(nuevoEstado) {
+function seleccionarEstado(nuevoEstado) {
   if (referidoEstadoIndex === null) return;
-if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
-  const referido = referidos[referidoEstadoIndex];
 
-  const selectorFecha = document.createElement("input");
-  selectorFecha.type = "date";
-  selectorFecha.style.position = "fixed";
-  selectorFecha.style.left = "50%";
-  selectorFecha.style.top = "50%";
-  selectorFecha.style.transform = "translate(-50%, -50%)";
-  selectorFecha.style.zIndex = "9999";
-
-  document.body.appendChild(selectorFecha);
-
-  selectorFecha.onchange = function () {
-    const fecha = selectorFecha.value;
-    selectorFecha.remove();
-
-    if (!fecha) return;
-
-    const hora = prompt(
-  "Escribe la hora en formato 24 horas.\nEjemplo: 18:30",
-  "18:00"
-);
-
-if (!hora) return;
-
-      referido.fecha = fecha;
-      referido.hora = hora;
-
-      const inicioFecha = new Date(fecha + "T" + hora);
-      const finFecha = new Date(inicioFecha.getTime() + 60 * 60 * 1000);
-
-      function formatoCalendar(fechaObj) {
-        return fechaObj.getFullYear().toString() +
-          String(fechaObj.getMonth() + 1).padStart(2, "0") +
-          String(fechaObj.getDate()).padStart(2, "0") +
-          "T" +
-          String(fechaObj.getHours()).padStart(2, "0") +
-          String(fechaObj.getMinutes()).padStart(2, "0") +
-          "00";
-      }
-
-      const inicio = formatoCalendar(inicioFecha);
-      const fin = formatoCalendar(finFecha);
-
-      const titulo = nuevoEstado + " - " + referido.nombre;
-
-      const detalles =
-        "Teléfono: " + (referido.telefono || "") +
-        "\nRelación: " + (referido.relacion || "");
-
-      const urlCalendar =
-        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-        "&text=" + encodeURIComponent(titulo) +
-        "&dates=" + encodeURIComponent(inicio + "/" + fin) +
-        "&details=" + encodeURIComponent(detalles);
-
-      window.open(urlCalendar, "_blank");
-    };
-
-    selectorHora.showPicker();
-  };
-
-  selectorFecha.showPicker();
-}
-  
   referidos[referidoEstadoIndex].estado = nuevoEstado;
 
   localStorage.setItem(
@@ -563,14 +498,9 @@ function cerrarModalEstado() {
 
   mostrarReferidos();
               }
-const pruebaReferidos =
-  JSON.parse(localStorage.getItem("referidos4en14")) || [];
-
-alert("Referidos guardados: " + 
-    pruebaReferidos.length);
-              mostrarReferidos();
+mostrarReferidos();
 
 </script>
 </div>
 </body>
-</html>
+    </html>
