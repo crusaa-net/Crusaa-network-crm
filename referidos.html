@@ -96,13 +96,31 @@ button {
 <body>
 
   <div class="contenedor">
+    <div id="menuReferidos">
+  <button type="button" onclick="abrirNuevoReferido()">
+    ➕ Agregar nuevo referido
+  </button>
+
+  <button type="button" onclick="abrirBuscarReferidos()">
+    🔍 Buscar referidos
+  </button>
+    </div>
+    <div id="seccionNuevoReferido">
     <h1>👥 Agregar Referido</h1>
 
     <p class="subtitulo">
       Registra una nueva oportunidad en CRUSAA Network.
     </p>
     <form id="formReferido">
-
+<div id="campoReferidoPor">
+  <input
+    type="text"
+    id="referidoPor"
+    placeholder="¿Quién lo refirió?"
+    autocomplete="off"
+  >
+  <div id="resultadosClientes"></div>
+</div>
   <input type="text" id="nombre" placeholder="Nombre del referido *" required>
 
   <input type="text" id="apellido" placeholder="Apellido">
@@ -130,12 +148,102 @@ button {
   <button type="submit">Guardar Referido</button>
 
     </form>
+
+    </div>
+      
   </div>
   <div id="referidosDelCliente"></div>
 <script>
+  const campoReferidoPor =
+  document.getElementById("referidoPor");
+
+const resultadosClientes =
+  document.getElementById("resultadosClientes");
+
+let clienteReferidorSeleccionado = null;
+
+campoReferidoPor.addEventListener("input", function () {
+  const texto = this.value.trim().toLowerCase();
+
+  resultadosClientes.innerHTML = "";
+  clienteReferidorSeleccionado = null;
+
+  if (!texto) return;
+
+  const clientes =
+    JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+
+  const coincidencias = clientes.filter(cliente => {
+    const nombreCompleto =
+      ((cliente.nombre || "") + " " + (cliente.apellido || ""))
+        .trim()
+        .toLowerCase();
+
+    return nombreCompleto.includes(texto);
+  });
+
+  coincidencias.forEach(cliente => {
+    const opcion = document.createElement("button");
+    opcion.type = "button";
+
+    opcion.textContent =
+      ((cliente.nombre || "") + " " + (cliente.apellido || "")).trim();
+
+    opcion.onclick = function () {
+      clienteReferidorSeleccionado = cliente;
+
+      campoReferidoPor.value =
+        ((cliente.nombre || "") + " " + (cliente.apellido || "")).trim();
+
+      resultadosClientes.innerHTML = "";
+    };
+
+    resultadosClientes.appendChild(opcion);
+  });
+});
 document.getElementById("formReferido").addEventListener("submit", function(event) {
   event.preventDefault();
+const nombreReferidor = campoReferidoPor.value.trim();
 
+if (
+  nombreReferidor &&
+  !clienteReferidorSeleccionado
+) {
+  const agregarComoCliente = confirm(
+    '"' + nombreReferidor +
+    '" no está seleccionado como cliente.\n\n' +
+    '¿Quieres agregarlo como nuevo cliente?'
+  );
+
+  if (agregarComoCliente) {
+    const partesNombre = nombreReferidor.split(" ");
+    const nombreNuevo = partesNombre.shift() || "";
+    const apellidoNuevo = partesNombre.join(" ");
+
+    const clientes =
+      JSON.parse(
+        localStorage.getItem("clientesCRUSAA")
+      ) || [];
+
+    const nuevoCliente = {
+      nombre: nombreNuevo,
+      apellido: apellidoNuevo,
+      telefono: "",
+      email: "",
+      notas: "",
+      foto: ""
+    };
+
+    clientes.push(nuevoCliente);
+
+    localStorage.setItem(
+      "clientesCRUSAA",
+      JSON.stringify(clientes)
+    );
+
+    clienteReferidorSeleccionado = nuevoCliente;
+  }
+}
   const referido = {
     nombre: document.getElementById("nombre").value.trim(),
     apellido: document.getElementById("apellido").value.trim(),
@@ -150,9 +258,14 @@ document.getElementById("formReferido").addEventListener("submit", function(even
     comentarios: document.getElementById("comentarios").value.trim(),
     fecha: new Date().toISOString(),
   
-clienteOrigen: JSON.parse(
-  localStorage.getItem("clienteReferidosActual")
-)?.nombre || ""
+clienteOrigen:
+  clienteReferidorSeleccionado
+    ? (
+        (clienteReferidorSeleccionado.nombre || "") +
+        " " +
+        (clienteReferidorSeleccionado.apellido || "")
+      ).trim()
+    : campoReferidoPor.value.trim()
   };
 
   let referidos =
@@ -266,6 +379,21 @@ referido.email = email;
 
   mostrarReferidosDelCliente();
   }
+  function abrirNuevoReferido() {
+  document.getElementById("menuReferidos").style.display = "none";
+  document.getElementById("seccionNuevoReferido").style.display = "block";
+  }
+  const clienteDesdeClientes = JSON.parse(
+  localStorage.getItem("clienteReferidosActual")
+);
+
+if (clienteDesdeClientes) {
+  document.getElementById("menuReferidos").style.display = "none";
+  document.getElementById("seccionNuevoReferido").style.display = "block";
+} else {
+  document.getElementById("menuReferidos").style.display = "block";
+  document.getElementById("seccionNuevoReferido").style.display = "none";
+}
 mostrarReferidosDelCliente();
 </script>
 </body>
