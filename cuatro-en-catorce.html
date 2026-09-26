@@ -462,29 +462,17 @@ selectorFecha.addEventListener("change", function () {
   }
 
   referidos[referidoEstadoIndex].fecha = fecha;
-const selectorHora = document.createElement("input");
-selectorHora.type = "time";
+const hora = prompt(
+  "Escribe la hora de la cita.\nEjemplo: 18:30",
+  "18:00"
+);
 
-selectorHora.style.position = "fixed";
-selectorHora.style.opacity = "0";
-selectorHora.style.pointerEvents = "none";
+if (!hora) {
+  selectorFecha.remove();
+  return;
+}
 
-document.body.appendChild(selectorHora);
-
-selectorHora.addEventListener("change", function () {
-  const hora = selectorHora.value;
-
-  if (!hora) {
-    selectorHora.remove();
-    return;
-  }
-
-  referidos[referidoEstadoIndex].hora = hora;
-
-  selectorHora.remove();
-});
-
-selectorHora.showPicker();
+referidos[referidoEstadoIndex].hora = hora;
   selectorFecha.remove();
 });
 
