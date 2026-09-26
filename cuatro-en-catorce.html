@@ -467,7 +467,8 @@ if (nuevoEstado === "Cita" || nuevoEstado === "Demostración") {
     selectorHora.style.top = "50%";
     selectorHora.style.transform = "translate(-50%, -50%)";
     selectorHora.style.zIndex = "9999";
-
+selectorHora.style.opacity = "0";
+selectorHora.style.pointerEvents = "none";
     document.body.appendChild(selectorHora);
 
     selectorHora.onchange = function () {
