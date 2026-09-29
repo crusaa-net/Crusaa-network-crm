@@ -253,6 +253,10 @@ mostrarHoy();
   timeStyle: "short"
 })}</p>` : ""} 
       ${llamada.notas ? `<p>📝 ${llamada.notas}</p>` : ""}
+   ${llamada.fechaCompletado ? `<p>✅ Seguimiento completado: ${new Date(llamada.fechaCompletado).toLocaleString("es-US", {
+  dateStyle: "long",
+  timeStyle: "short"
+})}</p>` : ""}   
     `;
 const editar = document.createElement("button");
 editar.textContent = "✏️ Editar";
