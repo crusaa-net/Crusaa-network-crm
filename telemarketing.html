@@ -255,6 +255,9 @@ cargarListaContactosCRM();
         event.preventDefault();
 
         const llamada = {
+          origen:
+  document.getElementById("contactoCRM").selectedOptions[0]?.textContent || "Manual",
+          
           nombre:
             document.getElementById("nombre").value.trim(),
 
