@@ -365,8 +365,29 @@ function editarLlamada(index) {
   const email = prompt("Correo electrónico:", llamada.email || "");
   if (email === null) return;
 
-  const resultado = prompt("Resultado de la llamada:", llamada.resultado);
-  if (resultado === null) return;
+  const resultado = prompt(
+  "Resultado de la llamada:\n\n" +
+  "1 - No contestó\n" +
+  "2 - Interesado\n" +
+  "3 - Cita programada\n" +
+  "4 - Volver a llamar\n" +
+  "5 - No interesado\n\n" +
+  "Escribe el número:",
+  ""
+);
+
+if (resultado === null) return;
+
+const opcionesResultado = {
+  "1": "No contestó",
+  "2": "Interesado",
+  "3": "Cita programada",
+  "4": "Volver a llamar",
+  "5": "No interesado"
+};
+
+const resultadoFinal =
+  opcionesResultado[resultado.trim()] || llamada.resultado;
 
   const seguimiento = prompt("Próximo seguimiento:", llamada.seguimiento || "");
   if (seguimiento === null) return;
@@ -379,7 +400,7 @@ function editarLlamada(index) {
     nombre,
     telefono,
     email,
-    resultado,
+    resultado: resultadoFinal,
     seguimiento,
     notas
   };
