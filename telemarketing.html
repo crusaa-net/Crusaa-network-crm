@@ -125,7 +125,9 @@
     </p>
 
     <form id="formTelemarketing" class="formulario">
-
+<select id="contactoCRM" onchange="cargarContactoCRM()">
+  <option value="">👤 Seleccionar cliente o referido</option>
+</select>
       <input
         type="text"
         id="nombre"
@@ -178,7 +180,70 @@
 
   </div>
 
-  <script>    let llamadas =
+  <script> 
+ function cargarListaContactosCRM() {
+  const selector = document.getElementById("contactoCRM");
+
+  const clientes =
+    JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+
+  const referidos =
+    JSON.parse(localStorage.getItem("referidosCRUSAA")) || [];
+
+  clientes.forEach(cliente => {
+    const opcion = document.createElement("option");
+
+    opcion.value = JSON.stringify({
+      nombre: cliente.nombre || "",
+      telefono: cliente.telefono || "",
+      email: cliente.email || ""
+    });
+
+    opcion.textContent =
+      "👤 Cliente - " + (cliente.nombre || "Sin nombre");
+
+    selector.appendChild(opcion);
+  });
+
+  referidos.forEach(referido => {
+    const opcion = document.createElement("option");
+
+    opcion.value = JSON.stringify({
+      nombre:
+        ((referido.nombre || "") + " " +
+        (referido.apellido || "")).trim(),
+      telefono: referido.telefono || "",
+      email: referido.email || ""
+    });
+
+    opcion.textContent =
+      "🤝 Referido - " +
+      ((referido.nombre || "") + " " +
+      (referido.apellido || "")).trim();
+
+    selector.appendChild(opcion);
+  });
+}
+
+function cargarContactoCRM() {
+  const selector = document.getElementById("contactoCRM");
+
+  if (!selector.value) return;
+
+  const contacto = JSON.parse(selector.value);
+
+  document.getElementById("nombre").value =
+    contacto.nombre || "";
+
+  document.getElementById("telefono").value =
+    contacto.telefono || "";
+
+  document.getElementById("email").value =
+    contacto.email || "";
+}
+
+cargarListaContactosCRM();   
+    let llamadas =
       JSON.parse(
         localStorage.getItem("telemarketingCRUSAA")
       ) || [];
