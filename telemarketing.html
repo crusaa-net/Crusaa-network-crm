@@ -389,9 +389,41 @@ const opcionesResultado = {
 const resultadoFinal =
   opcionesResultado[resultado.trim()] || llamada.resultado;
 
-  const seguimiento = prompt("Próximo seguimiento:", llamada.seguimiento || "");
-  if (seguimiento === null) return;
+  const seguimiento = prompt(
+  "Próximo seguimiento:\n\n" +
+  "Escribe la fecha y hora así:\n" +
+  "MM-DD-AAAA HH:MM AM/PM\n\n" +
+  "Ejemplo: 09-30-2026 6:30 PM",
+  ""
+);
 
+if (seguimiento === null) return;
+
+let seguimientoFinal = llamada.seguimiento || "";
+
+if (seguimiento.trim() !== "") {
+  const partes = seguimiento.trim().split(" ");
+
+  const fecha = partes[0];
+  const hora = partes[1];
+  const periodo = (partes[2] || "").toUpperCase();
+
+  const fechaPartes = fecha.split("-");
+  const horaPartes = hora.split(":");
+
+  let horas = Number(horaPartes[0]);
+  const minutos = horaPartes[1];
+
+  if (periodo === "PM" && horas < 12) horas += 12;
+  if (periodo === "AM" && horas === 12) horas = 0;
+
+  seguimientoFinal =
+    fechaPartes[2] + "-" +
+    fechaPartes[0].padStart(2, "0") + "-" +
+    fechaPartes[1].padStart(2, "0") + "T" +
+    String(horas).padStart(2, "0") + ":" +
+    minutos;
+}
   const notas = prompt("Notas:", llamada.notas || "");
   if (notas === null) return;
 
@@ -401,7 +433,7 @@ const resultadoFinal =
     telefono,
     email,
     resultado: resultadoFinal,
-    seguimiento,
+    seguimiento: seguimientoFinal,
     notas
   };
 
