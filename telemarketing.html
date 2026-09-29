@@ -392,6 +392,8 @@ if (fechaDia < hoy) {
 completar.textContent = "✅ Completado";
 
 completar.onclick = function () {
+  llamada.seguimientoCompletado = llamada.seguimiento;
+llamada.fechaCompletado = new Date().toISOString();
   llamada.seguimiento = "";
 
   localStorage.setItem(
