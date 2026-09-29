@@ -314,6 +314,7 @@ mostrarHoy();
     registro.innerHTML = `
       <h3>${llamada.nombre}</h3>
       <p>📞 ${llamada.telefono}</p>
+      ${llamada.origen ? `<p>🔗 Origen: ${llamada.origen}</p>` : ""}
       ${llamada.email ? `<p>✉️ ${llamada.email}</p>` : ""}
       <p>Resultado: ${llamada.resultado}</p>
      ${llamada.seguimiento ? `<p>📅 Seguimiento: ${new Date(llamada.seguimiento).toLocaleString("es-US", {
