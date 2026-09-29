@@ -458,8 +458,9 @@ const completarHoy = document.createElement("button");
 completarHoy.textContent = "✅ Completar seguimiento";
 
 completarHoy.onclick = function () {
+  llamada.seguimientoCompletado = llamada.seguimiento;
+  llamada.fechaCompletado = new Date().toISOString();
   llamada.seguimiento = "";
-
   localStorage.setItem(
     "telemarketingCRUSAA",
     JSON.stringify(llamadas)
