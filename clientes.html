@@ -170,6 +170,13 @@
       id="notas"
       placeholder="Notas del cliente"
     ></textarea>
+    <select id="telemarketing">
+  <option value="">📞 Telemarketing asignado</option>
+</select>
+
+<select id="vendedor">
+  <option value="">🤝 Vendedor/Demostrador asignado</option>
+</select>
 <input
   id="foto"
   type="file"
@@ -196,7 +203,42 @@
 
   let clientes =
     JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+const equipo =
+  JSON.parse(localStorage.getItem("equipoCRM")) || [];
 
+function cargarEquipo() {
+  const selectTelemarketing =
+    document.getElementById("telemarketing");
+
+  const selectVendedor =
+    document.getElementById("vendedor");
+
+  equipo.forEach(function(miembro) {
+
+    if (
+      miembro.rol === "Telemarketing" ||
+      miembro.rol === "Telemarketing + Vendedor/Demostrador"
+    ) {
+      const opcion = document.createElement("option");
+      opcion.value = miembro.nombre;
+      opcion.textContent = miembro.nombre;
+      selectTelemarketing.appendChild(opcion);
+    }
+
+    if (
+      miembro.rol === "Vendedor/Demostrador" ||
+      miembro.rol === "Telemarketing + Vendedor/Demostrador"
+    ) {
+      const opcion = document.createElement("option");
+      opcion.value = miembro.nombre;
+      opcion.textContent = miembro.nombre;
+      selectVendedor.appendChild(opcion);
+    }
+
+  });
+}
+
+cargarEquipo();
 async function guardarCliente() {
 
     const nombre =
@@ -211,7 +253,11 @@ const direccion =
   document.getElementById("direccion").value.trim();
     const notas =
       document.getElementById("notas").value.trim();
+const telemarketing =
+  document.getElementById("telemarketing").value;
 
+const vendedor =
+  document.getElementById("vendedor").value;
     if (!nombre) {
       alert("Escribe el nombre del cliente.");
       return;
@@ -225,13 +271,15 @@ const archivoFoto =
 
     
     clientes.push({
-      nombre,
-      telefono,
-      email,
-      direccion,
-      notas,
-      foto
-    });
+    nombre,
+    telefono,
+    email,
+    direccion,
+    notas,
+    telemarketing,
+    vendedor,
+    foto
+});
 
     localStorage.setItem(
       "clientesCRUSAA",
@@ -243,7 +291,8 @@ const archivoFoto =
     document.getElementById("email").value = "";
   document.getElementById("direccion").value = "";
     document.getElementById("notas").value = "";
-
+document.getElementById("telemarketing").value = "";
+document.getElementById("vendedor").value = "";
     mostrarClientes();
   }
 
@@ -331,6 +380,19 @@ if (cliente.direccion) {
         notas.textContent = "📝 " + cliente.notas;
         tarjeta.appendChild(notas);
       }
+      if (cliente.telemarketing) {
+    const telemarketing = document.createElement("p");
+    telemarketing.textContent =
+        "📞 Telemarketing: " + cliente.telemarketing;
+    tarjeta.appendChild(telemarketing);
+}
+
+if (cliente.vendedor) {
+    const vendedor = document.createElement("p");
+    vendedor.textContent =
+        "🤝 Vendedor/Demostrador: " + cliente.vendedor;
+    tarjeta.appendChild(vendedor);
+}
 const editar = document.createElement("button");
 editar.textContent = "✏️ Editar";
 editar.onclick = function () {
