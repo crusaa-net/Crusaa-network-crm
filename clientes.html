@@ -134,7 +134,32 @@ input[type="file"]::file-selector-button {
     .cliente h3 {
       margin-bottom: 8px;
     }
+.cliente button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 4px 2px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #334155;
+  color: white;
+}
 
+.cliente button:hover {
+  opacity: 0.9;
+}
+
+.cliente .eliminar {
+  background: #ef4444;
+}
+
+@media (max-width: 600px) {
+  .cliente button {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+}
     .cliente p {
       color: #cbd5e1;
       margin-bottom: 5px;
