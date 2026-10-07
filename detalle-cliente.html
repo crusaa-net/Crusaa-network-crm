@@ -187,7 +187,38 @@ if (!cliente) {
       "&dates=" + formatoGoogle(inicio) + "/" + formatoGoogle(fin) +
       "&details=" + encodeURIComponent(detalles) +
       "&location=" + encodeURIComponent(cliente.direccion || "");
+// Guardar seguimiento en el cliente
+if (!Array.isArray(cliente.seguimientos)) {
+  cliente.seguimientos = [];
+}
 
+cliente.seguimientos.push({
+  fecha: fecha,
+  tipo: "Cita",
+  creado: new Date().toISOString()
+});
+
+const clientesGuardados =
+  JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
+
+const indiceCliente = clientesGuardados.findIndex(c =>
+  c.nombre === cliente.nombre ||
+  (c.telefono && c.telefono === cliente.telefono)
+);
+
+if (indiceCliente !== -1) {
+  clientesGuardados[indiceCliente] = cliente;
+
+  localStorage.setItem(
+    "clientesCRUSAA",
+    JSON.stringify(clientesGuardados)
+  );
+}
+
+localStorage.setItem(
+  "clienteActual",
+  JSON.stringify(cliente)
+);
     window.open(url, "_blank");
   };
   }
