@@ -178,9 +178,9 @@ if (!cliente) {
       "Cita con " + (cliente.nombre || "Cliente");
 
     const detalles =
-      "Teléfono: " + (cliente.telefono || "") +
-      "\nCorreo: " + (cliente.email || "");
-
+  "Teléfono: " + (cliente.telefono || "") +
+  "\nCorreo: " + (cliente.email || "") +
+  "\n\nNotas: " + (cliente.notas || "Sin notas");
     const url =
       "https://calendar.google.com/calendar/render?action=TEMPLATE" +
       "&text=" + encodeURIComponent(titulo) +
