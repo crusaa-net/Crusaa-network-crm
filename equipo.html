@@ -20,8 +20,18 @@
     header {
       background: #111827;
       color: white;
-      padding: 20px;
+      padding: 28px 20px;
       text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 20px;
     }
 
     .container {
@@ -38,7 +48,7 @@
       margin-bottom: 20px;
     }
 
-    h1, h2 {
+    h2 {
       margin-top: 0;
     }
 
@@ -49,7 +59,8 @@
       margin-bottom: 6px;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
@@ -57,7 +68,7 @@
       font-size: 16px;
     }
 
-    button {
+    .boton-principal {
       width: 100%;
       margin-top: 20px;
       padding: 14px;
@@ -71,21 +82,57 @@
     }
 
     .miembro {
+      padding: 18px 0;
       border-bottom: 1px solid #ddd;
-      padding: 14px 0;
     }
 
     .miembro:last-child {
       border-bottom: none;
     }
 
+    .nombre-miembro {
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .telefono {
+      margin-top: 4px;
+    }
+
     .rol {
       display: inline-block;
-      margin-top: 5px;
-      padding: 5px 10px;
+      margin-top: 8px;
+      padding: 6px 12px;
       background: #e5e7eb;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 14px;
+    }
+
+    .acciones {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn-editar,
+    .btn-eliminar {
+      flex: 1;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-editar {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-eliminar {
+      background: #dc2626;
+      color: white;
     }
 
     .vacio {
@@ -98,6 +145,30 @@
       text-decoration: none;
       color: #111827;
       font-weight: bold;
+    }
+
+    .modo-edicion {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fff7d6;
+      color: #755900;
+      font-weight: bold;
+    }
+
+    .cancelar {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px solid #aaa;
+      border-radius: 8px;
+      background: white;
+      color: #222;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -114,7 +185,11 @@
   <a class="volver" href="index.html">← Volver al CRM</a>
 
   <div class="card">
-    <h2>Agregar miembro</h2>
+    <h2 id="tituloFormulario">Agregar miembro</h2>
+
+    <div id="mensajeEdicion" class="modo-edicion">
+      Estás editando este miembro.
+    </div>
 
     <form id="formEquipo">
 
@@ -136,7 +211,9 @@
       <label for="rol">Rol</label>
       <select id="rol" required>
         <option value="">Selecciona un rol</option>
-        <option value="Telemarketing">Telemarketing</option>
+        <option value="Telemarketing">
+          Telemarketing
+        </option>
         <option value="Vendedor/Demostrador">
           Vendedor/Demostrador
         </option>
@@ -145,7 +222,21 @@
         </option>
       </select>
 
-      <button type="submit">Agregar al equipo</button>
+      <button
+        type="submit"
+        id="botonGuardar"
+        class="boton-principal"
+      >
+        Agregar al equipo
+      </button>
+
+      <button
+        type="button"
+        id="botonCancelar"
+        class="cancelar"
+      >
+        Cancelar edición
+      </button>
 
     </form>
   </div>
@@ -160,11 +251,32 @@
 <script>
   const form = document.getElementById("formEquipo");
   const lista = document.getElementById("listaEquipo");
+  const campoNombre = document.getElementById("nombre");
+  const campoTelefono = document.getElementById("telefono");
+  const campoRol = document.getElementById("rol");
 
-  let equipo = JSON.parse(localStorage.getItem("equipoCRM")) || [];
+  const tituloFormulario =
+    document.getElementById("tituloFormulario");
+
+  const mensajeEdicion =
+    document.getElementById("mensajeEdicion");
+
+  const botonGuardar =
+    document.getElementById("botonGuardar");
+
+  const botonCancelar =
+    document.getElementById("botonCancelar");
+
+  let equipo =
+    JSON.parse(localStorage.getItem("equipoCRM")) || [];
+
+  let indiceEditando = null;
 
   function guardarEquipo() {
-    localStorage.setItem("equipoCRM", JSON.stringify(equipo));
+    localStorage.setItem(
+      "equipoCRM",
+      JSON.stringify(equipo)
+    );
   }
 
   function mostrarEquipo() {
@@ -177,53 +289,152 @@
       return;
     }
 
-    equipo.forEach(function(miembro) {
+    equipo.forEach(function(miembro, indice) {
 
       const div = document.createElement("div");
       div.className = "miembro";
 
-      const nombre = document.createElement("strong");
+      const nombre = document.createElement("div");
+      nombre.className = "nombre-miembro";
       nombre.textContent = miembro.nombre;
 
       const telefono = document.createElement("div");
+      telefono.className = "telefono";
       telefono.textContent =
-        miembro.telefono ? miembro.telefono : "Sin teléfono";
+        miembro.telefono || "Sin teléfono";
 
       const rol = document.createElement("span");
       rol.className = "rol";
       rol.textContent = miembro.rol;
 
+      const acciones = document.createElement("div");
+      acciones.className = "acciones";
+
+      const editar = document.createElement("button");
+      editar.type = "button";
+      editar.className = "btn-editar";
+      editar.textContent = "Editar";
+
+      editar.addEventListener("click", function() {
+        editarMiembro(indice);
+      });
+
+      const eliminar = document.createElement("button");
+      eliminar.type = "button";
+      eliminar.className = "btn-eliminar";
+      eliminar.textContent = "Eliminar";
+
+      eliminar.addEventListener("click", function() {
+        eliminarMiembro(indice);
+      });
+
+      acciones.appendChild(editar);
+      acciones.appendChild(eliminar);
+
       div.appendChild(nombre);
       div.appendChild(telefono);
       div.appendChild(rol);
+      div.appendChild(acciones);
 
       lista.appendChild(div);
     });
+  }
+
+  function editarMiembro(indice) {
+
+    const miembro = equipo[indice];
+
+    campoNombre.value = miembro.nombre;
+    campoTelefono.value = miembro.telefono || "";
+    campoRol.value = miembro.rol;
+
+    indiceEditando = indice;
+
+    tituloFormulario.textContent = "Editar miembro";
+    botonGuardar.textContent = "Guardar cambios";
+
+    mensajeEdicion.style.display = "block";
+    botonCancelar.style.display = "block";
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  function cancelarEdicion() {
+
+    indiceEditando = null;
+
+    form.reset();
+
+    tituloFormulario.textContent = "Agregar miembro";
+    botonGuardar.textContent = "Agregar al equipo";
+
+    mensajeEdicion.style.display = "none";
+    botonCancelar.style.display = "none";
+  }
+
+  function eliminarMiembro(indice) {
+
+    const miembro = equipo[indice];
+
+    const confirmar = confirm(
+      "¿Seguro que deseas eliminar a " +
+      miembro.nombre +
+      "?"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    equipo.splice(indice, 1);
+
+    guardarEquipo();
+    mostrarEquipo();
+
+    if (indiceEditando !== null) {
+      cancelarEdicion();
+    }
   }
 
   form.addEventListener("submit", function(event) {
 
     event.preventDefault();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const telefono = document.getElementById("telefono").value.trim();
-    const rol = document.getElementById("rol").value;
+    const nombre = campoNombre.value.trim();
+    const telefono = campoTelefono.value.trim();
+    const rol = campoRol.value;
 
     if (!nombre || !rol) {
       return;
     }
 
-    equipo.push({
+    const datosMiembro = {
       nombre: nombre,
       telefono: telefono,
       rol: rol
-    });
+    };
+
+    if (indiceEditando === null) {
+
+      equipo.push(datosMiembro);
+
+    } else {
+
+      equipo[indiceEditando] = datosMiembro;
+    }
 
     guardarEquipo();
     mostrarEquipo();
-
-    form.reset();
+    cancelarEdicion();
   });
+
+  botonCancelar.addEventListener(
+    "click",
+    cancelarEdicion
+  );
 
   mostrarEquipo();
 </script>
