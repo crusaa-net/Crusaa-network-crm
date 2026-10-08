@@ -100,6 +100,12 @@
       📅 Agregar a Google Calendar
     </button>
   </div>
+      <div class="seguimiento">
+  <h3>Historial de seguimientos</h3>
+  <div id="historialSeguimientos">
+    No hay seguimientos registrados.
+  </div>
+      </div>
     </div>
     </div>
 
@@ -112,6 +118,37 @@ if (!cliente) {
   alert("No se encontró el cliente seleccionado.");
   window.location.href = "clientes.html";
 } else {
+  // MOSTRAR HISTORIAL DE SEGUIMIENTOS
+const historial = document.getElementById(
+  "historialSeguimientos"
+);
+
+if (
+  Array.isArray(cliente.seguimientos) &&
+  cliente.seguimientos.length > 0
+) {
+  historial.innerHTML = "";
+
+  cliente.seguimientos.forEach((seguimiento) => {
+    const registro = document.createElement("div");
+
+    const fecha = new Date(seguimiento.fecha);
+
+    registro.textContent =
+      "📅 " +
+      (seguimiento.tipo || "Seguimiento") +
+      " - " +
+      (isNaN(fecha.getTime())
+        ? seguimiento.fecha
+        : fecha.toLocaleString("es-US"));
+
+    registro.style.padding = "10px";
+    registro.style.marginBottom = "8px";
+    registro.style.borderBottom = "1px solid #ccc";
+
+    historial.appendChild(registro);
+  });
+}
   document.getElementById("nombreCliente").textContent =
     cliente.nombre || "Cliente";
 
