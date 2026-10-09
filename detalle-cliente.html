@@ -400,6 +400,19 @@ document.getElementById("notasCliente").textContent =
   cliente.notas || "Sin notas";
     
 };
+  let esperandoRegresoCalendario = false;
+
+document.getElementById("calendarioCliente")
+    .addEventListener("click", function() {
+        esperandoRegresoCalendario = true;
+    });
+
+window.addEventListener("focus", function() {
+    if (esperandoRegresoCalendario) {
+        esperandoRegresoCalendario = false;
+        location.reload();
+    }
+});
   </script>
 
 </body>
