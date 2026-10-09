@@ -147,9 +147,90 @@ if (
     registro.style.borderBottom = "1px solid #ccc";
 
     historial.appendChild(registro);
+    
+const botones = document.createElement("div");
+botones.style.marginTop = "8px";
+
+const completar = document.createElement("button");
+completar.textContent = seguimiento.completado
+  ? "↩️ Pendiente"
+  : "✅ Completar";
+
+completar.onclick = function () {
+  seguimiento.completado = !seguimiento.completado;
+  guardarSeguimientos();
+};
+
+const editar = document.createElement("button");
+editar.textContent = "✏️ Editar";
+
+editar.onclick = function () {
+  const nuevaFecha = prompt(
+    "Nueva fecha y hora (AAAA-MM-DDTHH:MM):",
+    seguimiento.fecha
+  );
+
+  if (nuevaFecha === null) return;
+
+  const fechaValida = new Date(nuevaFecha);
+  if (!nuevaFecha.trim() || isNaN(fechaValida.getTime())) {
+    alert("Fecha inválida.");
+    return;
+  }
+
+  seguimiento.fecha = nuevaFecha;
+  guardarSeguimientos();
+};
+
+const eliminar = document.createElement("button");
+eliminar.textContent = "🗑️ Eliminar";
+
+eliminar.onclick = function () {
+  if (!confirm("¿Eliminar este seguimiento?")) return;
+
+  const indice = cliente.seguimientos.indexOf(seguimiento);
+  if (indice !== -1) {
+    cliente.seguimientos.splice(indice, 1);
+    guardarSeguimientos();
+  }
+};
+
+botones.append(completar, editar, eliminar);
+registro.appendChild(botones);
+
   });
 }
-  document.getElementById("nombreCliente").textContent =
+  
+function guardarSeguimientos() {
+  const clientes = JSON.parse(
+    localStorage.getItem("clientesCRUSAA") || "[]"
+  );
+
+  const indice = clientes.findIndex(c =>
+    c.nombre === cliente.nombre &&
+    c.telefono === cliente.telefono
+  );
+
+  if (indice !== -1) {
+    clientes[indice] = cliente;
+
+    localStorage.setItem(
+      "clientesCRUSAA",
+      JSON.stringify(clientes)
+    );
+  } else {
+    alert("No se encontró el cliente para guardar.");
+    return;
+  }
+
+  localStorage.setItem(
+    "clienteActual",
+    JSON.stringify(cliente)
+  );
+
+  location.reload();
+}
+document.getElementById("nombreCliente").textContent =
     cliente.nombre || "Cliente";
 
   document.getElementById("telefonoCliente").textContent =
