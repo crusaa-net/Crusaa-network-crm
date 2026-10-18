@@ -354,9 +354,11 @@ function mostrarReferidos() {
 total.textContent = referidosDelCliente.length;
   const totalDemostraciones =
   referidosDelCliente.filter(function(referido) {
-    return referido.estado === "Demostración";
+    return (
+      referido.estado === "Demostración" ||
+      referido.estado === "Venta"
+    );
   }).length;
-
 document.getElementById("totalDemostraciones").textContent =
   totalDemostraciones;
   const totalVentas =
