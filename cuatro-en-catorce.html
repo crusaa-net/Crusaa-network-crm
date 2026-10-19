@@ -334,6 +334,14 @@ clientes.forEach(function(cliente) {
   alert("Escribe el nombre y teléfono del referido.");
   return;
                 }
+                const clavePrograma = "inicio4en14_" + cliente;
+
+if (!localStorage.getItem(clavePrograma)) {
+  localStorage.setItem(
+    clavePrograma,
+    new Date().toISOString()
+  );
+}
                 referidos.push({
   cliente: cliente,
   nombre: nombre,
@@ -354,7 +362,65 @@ document.getElementById("notasReferido").value = "";
 
 mostrarReferidos();
               }
+              function actualizarControlPrograma() {
+  const cliente = clientePrograma.value;
+
+  const inicioElemento =
+    document.getElementById("fechaInicioPrograma");
+
+  const limiteElemento =
+    document.getElementById("fechaLimitePrograma");
+
+  const diasElemento =
+    document.getElementById("diasRestantesPrograma");
+
+  if (!inicioElemento || !limiteElemento || !diasElemento) {
+    return;
+  }
+
+  const fechaGuardada = cliente
+    ? localStorage.getItem("inicio4en14_" + cliente)
+    : null;
+
+  if (!fechaGuardada) {
+    inicioElemento.textContent = "Inicio: Sin iniciar";
+    limiteElemento.textContent = "Fecha límite: Pendiente";
+    diasElemento.textContent = "Días restantes: --";
+    return;
+  }
+
+  const inicio = new Date(fechaGuardada);
+
+  if (isNaN(inicio.getTime())) {
+    return;
+  }
+
+  const limite = new Date(inicio);
+  limite.setDate(limite.getDate() + 14);
+
+  const ahora = new Date();
+
+  const diasRestantes = Math.max(
+    0,
+    Math.ceil(
+      (limite.getTime() - ahora.getTime()) /
+      86400000
+    )
+  );
+
+  inicioElemento.textContent =
+    "Inicio: " + inicio.toLocaleDateString("es-US");
+
+  limiteElemento.textContent =
+    "Fecha límite: " + limite.toLocaleDateString("es-US");
+
+  diasElemento.textContent =
+    ahora >= limite
+      ? "Plazo vencido"
+      : "Días restantes: " + diasRestantes;
+              }
 function mostrarReferidos() {
+  actualizarControlPrograma();
   const lista = document.getElementById("listaReferidos");
  const clientes =
   JSON.parse(localStorage.getItem("clientesCRUSAA")) || [];
